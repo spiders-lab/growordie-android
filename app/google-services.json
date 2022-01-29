@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587260488182",
+    "project_id": "growordie-102a4",
+    "storage_bucket": "growordie-102a4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587260488182:android:bfc0f22c9ac7b780e47fd7",
+        "android_client_info": {
+          "package_name": "com.fearlessspider.god"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587260488182-sspgnbijh66k0vu9lgp8gh73nqo5rbe7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMsKy5qD_gKVa5E5QuCWt6fw3K30HbUBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587260488182-sspgnbijh66k0vu9lgp8gh73nqo5rbe7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
