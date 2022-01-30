@@ -6,17 +6,18 @@ import com.google.firebase.firestore.ServerTimestamp;
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
-    public String uid, username;
+public class Journey implements Serializable {
+    public String uid, name, user_uid;
     @ServerTimestamp
     public Date createdAt;
 
-    public User() {
+    public Journey() {
     }
 
-    public User(String uid, String username) {
+    public Journey(String uid, String name, String user_uid) {
         this.uid = uid;
-        this.username = username;
+        this.name = name;
+        this.user_uid = user_uid;
     }
 
     @Exclude
@@ -25,7 +26,12 @@ public class User implements Serializable {
     }
 
     @Exclude
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
+    }
+
+    @Exclude
+    public String getUserUid() {
+        return user_uid;
     }
 }
