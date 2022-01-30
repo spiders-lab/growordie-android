@@ -1,6 +1,6 @@
 package com.fearlessspider.god.data;
 
-import com.fearlessspider.god.utilsl;
+import com.fearlessspider.god.Utils;
 
 import org.junit.Assert;
 import org.junit.Before;
