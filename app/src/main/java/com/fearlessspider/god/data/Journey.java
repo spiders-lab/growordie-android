@@ -7,22 +7,22 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Journey implements Serializable {
-    public String uid, name, user_uid;
+    public String id, name, user_id;
     @ServerTimestamp
     public Date createdAt;
 
     public Journey() {
     }
 
-    public Journey(String uid, String name, String user_uid) {
-        this.uid = uid;
+    public Journey(String id, String name, String user_id) {
+        this.id = id;
         this.name = name;
-        this.user_uid = user_uid;
+        this.user_id = user_id;
     }
 
     @Exclude
-    public String getUid() {
-        return uid;
+    public String getId() {
+        return id;
     }
 
     @Exclude
@@ -31,7 +31,7 @@ public class Journey implements Serializable {
     }
 
     @Exclude
-    public String getUserUid() {
-        return user_uid;
+    public String getUserId() {
+        return user_id;
     }
 }

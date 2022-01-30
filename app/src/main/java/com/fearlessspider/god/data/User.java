@@ -7,21 +7,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
-    public String uid, username;
+    public String id, username;
     @ServerTimestamp
     public Date createdAt;
 
     public User() {
     }
 
-    public User(String uid, String username) {
-        this.uid = uid;
+    public User(String id, String username) {
+        this.id = id;
         this.username = username;
     }
 
     @Exclude
-    public String getUid() {
-        return uid;
+    public String getId() {
+        return id;
     }
 
     @Exclude
