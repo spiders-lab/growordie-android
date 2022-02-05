@@ -16,6 +16,7 @@ public class Widget extends AppWidgetProvider {
         final RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget);
 
         view.setOnClickPendingIntent(R.id.widget, pendingIntent);
+        view.setTextViewText(R.id.widgetsteps, String.valueOf(0));
 
         return view;
     }
