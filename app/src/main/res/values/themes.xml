@@ -22,4 +22,7 @@
     <style name="Theme.God.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.God.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.God.FullScreen" parent="Theme.God.NoActionBar" />
+
 </resources>
