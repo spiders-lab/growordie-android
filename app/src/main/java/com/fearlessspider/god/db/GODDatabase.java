@@ -12,10 +12,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Journey.class, Track.class, Exercise.class}, version = 1, exportSchema = false)
 abstract class GODDatabase extends RoomDatabase {
 
     abstract UserDao userDao();
+    abstract JourneyDao journeyDao();
+    abstract TrackDao trackDao();
+    abstract ExerciseDao exerciseDao();
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile GODDatabase INSTANCE;

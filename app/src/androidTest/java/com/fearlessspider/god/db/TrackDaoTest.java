@@ -8,7 +8,6 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.fearlessspider.god.LiveDataTestUtil;
-import com.fearlessspider.god.data.Track;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -45,7 +44,7 @@ public class TrackDaoTest {
 
     @Test
     public void insertAndGetTrack() throws Exception {
-        Track track = new Track("Java");
+        Track track = new Track(0, "Java");
         trackDao.insert(track);
         List<Track> allTracks = LiveDataTestUtil.getValue(trackDao.getAlphabetizedTracks());
         Assert.assertEquals(allTracks.get(0).getName(), track.getName());
@@ -53,9 +52,9 @@ public class TrackDaoTest {
 
     @Test
     public void getAllTracks() throws Exception {
-        Track track = new Track("C++");
+        Track track = new Track(0, "C++");
         trackDao.insert(track);
-        Track track1 = new Track("Python");
+        Track track1 = new Track(0, "Python");
         trackDao.insert(track1);
         List<Track> allTracks = LiveDataTestUtil.getValue(trackDao.getAlphabetizedTracks());
         Assert.assertEquals(allTracks.get(0).getName(), track.getName());
@@ -64,10 +63,11 @@ public class TrackDaoTest {
 
     @Test
     public void deleteAll() throws Exception {
-        Track track = new Track("JavaScript");
+        Track track = new Track(0, "JavaScript");
         trackDao.insert(track);
-        Track track1 = new Track("HTML");
+        Track track1 = new Track(0, "HTML");
         trackDao.insert(track1);
+        trackDao.deleteAll();
         List<Track> allTracks = LiveDataTestUtil.getValue(trackDao.getAlphabetizedTracks());
         Assert.assertTrue(allTracks.isEmpty());
     }
