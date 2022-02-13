@@ -52,6 +52,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
     //implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.1'
     implementation 'androidx.test:core:1.4.0'
+    implementation 'androidx.fragment:fragment:1.4.1'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.1'
 
     annotationProcessor 'androidx.room:room-compiler:2.4.1'
 
