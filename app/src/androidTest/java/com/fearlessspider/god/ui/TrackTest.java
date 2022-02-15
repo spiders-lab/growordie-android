@@ -11,18 +11,18 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.fearlessspider.god.R;
-import com.fearlessspider.god.ui.journey.JourneyFragment;
+import com.fearlessspider.god.ui.track.TrackFragment;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class JourneyTest {
+public class TrackTest {
     @Test
     public void checkTitleOfScreen() {
-        FragmentScenario.launchInContainer(JourneyFragment.class);
+        FragmentScenario.launchInContainer(TrackFragment.class);
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(withText(R.string.journey)).check(matches(withParent(withId(R.id.toolbar))));
+        onView(withText(R.string.track_list)).check(matches(withParent(withId(R.id.toolbar))));
     }
 }
