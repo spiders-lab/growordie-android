@@ -7,8 +7,6 @@ import androidx.room.PrimaryKey;
 
 import com.google.type.DateTime;
 
-import java.sql.Date;
-
 @Entity(tableName = "exercises")
 public class Exercise {
 
@@ -28,6 +26,7 @@ public class Exercise {
     public Exercise(@NonNull Integer id, @NonNull String comment) {
         this.id = id;
         this.comment = comment;
+        this.createdAt = DateTime.getDefaultInstance();
     }
 
     @NonNull
