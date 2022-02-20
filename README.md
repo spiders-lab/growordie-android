@@ -1,5 +1,7 @@
 # G.O.D. - Grow Or Die
 
+Test Driven Development
+
 ## TODO
 
 * Pedometr
