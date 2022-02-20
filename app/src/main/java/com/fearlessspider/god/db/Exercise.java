@@ -5,7 +5,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.google.type.DateTime;
+import java.util.Date;
 
 @Entity(tableName = "exercises")
 public class Exercise {
@@ -21,12 +21,11 @@ public class Exercise {
 
     @NonNull
     @ColumnInfo(name = "createdAt")
-    private DateTime createdAt;
+    private Date createdAt;
 
     public Exercise(@NonNull Integer id, @NonNull String comment) {
         this.id = id;
         this.comment = comment;
-        this.createdAt = DateTime.getDefaultInstance();
     }
 
     @NonNull
@@ -40,7 +39,12 @@ public class Exercise {
     }
 
     @NonNull
-    public DateTime getCreatedAt() {
+    public Date getCreatedAt() {
         return this.createdAt;
     }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }
