@@ -8,19 +8,19 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.fearlessspider.god.ui.splashscreen.SplashScreenFragment;
+import com.fearlessspider.god.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Instrumented test, which will test SplashScreen activity
+ * Instrumented test, which will test Main activity
  */
 @RunWith(AndroidJUnit4.class)
-public class SplashScreenTest {
+public class MainActivityTest {
     @Rule
-    public ActivityScenarioRule<SplashScreenFragment> activityScenarioRule = new ActivityScenarioRule(SplashScreenFragment.class);
+    public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule(MainActivity.class);
 
     @Test
     public void checkTextOnScreen() {
