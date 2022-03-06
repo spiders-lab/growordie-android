@@ -23,7 +23,7 @@ public class SplashScreenTest {
     public ActivityScenarioRule<SplashScreenFragment> activityScenarioRule = new ActivityScenarioRule(SplashScreenFragment.class);
 
     @Test
-    public void checkTextOnScree() {
+    public void checkTextOnScreen() {
         onView(withText("G.O.D.")).check(matches(isDisplayed()));
         try {
             Thread.sleep(5000);
