@@ -12,5 +12,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_journey">Journey</string>
     <string name="journey">Journey</string>
+    <string name="track">Track</string>
     <string name="steps">Steps</string>
 </resources>

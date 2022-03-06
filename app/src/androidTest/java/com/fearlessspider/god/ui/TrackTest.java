@@ -26,6 +26,6 @@ public class TrackTest {
         FragmentScenario.launchInContainer(TrackFragment.class);
 
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(withText(R.string.track_list)).check(matches(withParent(withId(R.id.toolbar))));
+        onView(withText(R.string.track)).check(matches(withParent(withId(R.id.toolbar))));
     }
 }
