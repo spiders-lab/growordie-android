@@ -1,4 +1,4 @@
-package com.fearlessspider.god.ui.track;
+package com.fearlessspider.god.ui.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,25 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fearlessspider.god.databinding.FragmentTrackBinding;
+import com.fearlessspider.god.databinding.FragmentProfileBinding;
 
 /**
- * Track fragment
+ * Profile fragment
  */
-public class TrackFragment extends Fragment {
+public class ProfileFragment extends Fragment {
 
-    private FragmentTrackBinding binding;
+    private FragmentProfileBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        TrackViewModel trackViewModel =
-                new ViewModelProvider(this).get(TrackViewModel.class);
+        ProfileViewModel profileViewModel =
+                new ViewModelProvider(this).get(ProfileViewModel.class);
 
-        binding = FragmentTrackBinding.inflate(inflater, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textTrack;
-        trackViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textProfile;
+        profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

@@ -14,4 +14,6 @@
     <string name="journey">Journey</string>
     <string name="track">Track</string>
     <string name="steps">Steps</string>
+    <string name="exercise">Exercise</string>
+    <string name="profile">Profile</string>
 </resources>

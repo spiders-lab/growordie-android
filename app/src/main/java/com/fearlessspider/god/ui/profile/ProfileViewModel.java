@@ -1,19 +1,19 @@
-package com.fearlessspider.god.ui.track;
+package com.fearlessspider.god.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 /**
- * Track fragment model
+ * Profile fragment model
  */
-public class TrackViewModel extends ViewModel {
+public class ProfileViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public TrackViewModel() {
+    public ProfileViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is track fragment");
+        mText.setValue("This is profile fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,4 +1,4 @@
-package com.fearlessspider.god.ui.track;
+package com.fearlessspider.god.ui.exercise;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,25 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.fearlessspider.god.databinding.FragmentTrackBinding;
+import com.fearlessspider.god.databinding.FragmentExerciseBinding;
 
 /**
- * Track fragment
+ * Exercise fragment
  */
-public class TrackFragment extends Fragment {
+public class ExerciseFragment extends Fragment {
 
-    private FragmentTrackBinding binding;
+    private FragmentExerciseBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        TrackViewModel trackViewModel =
-                new ViewModelProvider(this).get(TrackViewModel.class);
+        ExerciseViewModel exerciseViewModel =
+                new ViewModelProvider(this).get(ExerciseViewModel.class);
 
-        binding = FragmentTrackBinding.inflate(inflater, container, false);
+        binding = FragmentExerciseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textTrack;
-        trackViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textExercise;
+        exerciseViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

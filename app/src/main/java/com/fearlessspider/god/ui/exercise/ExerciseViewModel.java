@@ -1,19 +1,19 @@
-package com.fearlessspider.god.ui.track;
+package com.fearlessspider.god.ui.exercise;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 /**
- * Track fragment model
+ * Exercise fragment model
  */
-public class TrackViewModel extends ViewModel {
+public class ExerciseViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public TrackViewModel() {
+    public ExerciseViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is track fragment");
+        mText.setValue("This is exercise fragment");
     }
 
     public LiveData<String> getText() {
