@@ -12,7 +12,7 @@ import com.fearlessspider.god.MainActivity;
 import com.fearlessspider.god.R;
 
 /**
- * @class
+ * Splash screen activity
  */
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenFragment extends FragmentActivity {
