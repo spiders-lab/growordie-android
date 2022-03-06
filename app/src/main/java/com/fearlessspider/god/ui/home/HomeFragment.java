@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fearlessspider.god.databinding.FragmentHomeBinding;
 
+/**
+ * @class
+ */
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;

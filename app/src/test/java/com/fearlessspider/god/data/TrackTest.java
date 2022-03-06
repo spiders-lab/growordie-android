@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Unit test for Track model
+ */
 public class TrackTest extends Utils {
     private Track track;
 
@@ -25,6 +28,8 @@ public class TrackTest extends Utils {
         Track deserialized2 = (Track) deserialize(serialized2);
 
         Assert.assertEquals(deserialized1.getName(), deserialized2.getName());
+        Assert.assertEquals(deserialized1.getId(), deserialized2.getId());
+        Assert.assertEquals(deserialized1.getJourneyId(), deserialized2.getJourneyId());
         Assert.assertEquals(track.getName(), deserialized1.getName());
         Assert.assertEquals(track.getName(), deserialized2.getName());
     }

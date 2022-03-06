@@ -15,6 +15,9 @@ import com.fearlessspider.god.R;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * Instrumented test, which will test Exercise fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class ExerciseTest {
     @Test

@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fearlessspider.god.databinding.FragmentGalleryBinding;
 
+/**
+ * @class
+ */
 public class GalleryFragment extends Fragment {
 
     private FragmentGalleryBinding binding;

@@ -16,6 +16,9 @@ import com.fearlessspider.god.ui.profile.ProfileFragment;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * Instrumented test, which will test Profile fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class ProfileTest {
 

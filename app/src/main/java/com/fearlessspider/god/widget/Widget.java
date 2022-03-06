@@ -10,6 +10,9 @@ import android.widget.RemoteViews;
 import com.fearlessspider.god.MainActivity;
 import com.fearlessspider.god.R;
 
+/**
+ * G.O.D. Widget
+ */
 public class Widget extends AppWidgetProvider {
     public static RemoteViews updateWidget(final int appWidgetId, final Context context, final int steps) {
         final PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, new Intent(context, MainActivity.class), 0);

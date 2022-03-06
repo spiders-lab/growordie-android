@@ -11,6 +11,9 @@ import androidx.fragment.app.FragmentActivity;
 import com.fearlessspider.god.MainActivity;
 import com.fearlessspider.god.R;
 
+/**
+ * @class
+ */
 @SuppressLint("CustomSplashScreen")
 public class SplashScreenFragment extends FragmentActivity {
     @Override

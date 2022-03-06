@@ -8,6 +8,9 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 
+/**
+ * Widget update service
+ */
 public class WidgetUpdateService extends JobIntentService {
     private static final int JOB_ID = 85;
     @Override

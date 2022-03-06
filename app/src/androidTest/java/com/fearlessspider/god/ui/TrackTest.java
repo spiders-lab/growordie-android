@@ -16,6 +16,9 @@ import com.fearlessspider.god.ui.track.TrackFragment;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * Instrumented test, which will test Track fragment
+ */
 @RunWith(AndroidJUnit4.class)
 public class TrackTest {
     @Test

@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Unit test for Exercise model
+ */
 public class ExerciseTest extends Utils {
     private Exercise exercise;
 
@@ -25,6 +28,8 @@ public class ExerciseTest extends Utils {
         Exercise deserialized2 = (Exercise) deserialize(serialized2);
 
         Assert.assertEquals(deserialized1.getComment(), deserialized2.getComment());
+        Assert.assertEquals(deserialized1.getId(), deserialized2.getId());
+        Assert.assertEquals(deserialized1.getId(), deserialized2.getId());
         Assert.assertEquals(exercise.getComment(), deserialized1.getComment());
         Assert.assertEquals(exercise.getComment(), deserialized2.getComment());
     }

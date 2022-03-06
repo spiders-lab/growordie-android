@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Instrumented test, which will test SplashScreen
+ * Instrumented test, which will test SplashScreen activity
  */
 @RunWith(AndroidJUnit4.class)
 public class SplashScreenTest {
