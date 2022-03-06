@@ -11,7 +11,7 @@ import androidx.fragment.app.testing.FragmentScenario;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.fearlessspider.god.R;
-import com.fearlessspider.god.ui.journey.JourneyFragment;
+import com.fearlessspider.god.ui.journeylist.JourneyListFragment;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

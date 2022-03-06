@@ -12,6 +12,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_journey">Journey</string>
     <string name="journey">Journey</string>
+    <string name="journey_list">Journey List</string>
     <string name="track">Track</string>
     <string name="steps">Steps</string>
     <string name="exercise">Exercise</string>
