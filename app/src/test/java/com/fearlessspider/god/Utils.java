@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * Utils for unit test
+ */
 public class Utils {
     protected static byte[] serialize(Object obj) throws IOException {
         ByteArrayOutputStream b = new ByteArrayOutputStream();

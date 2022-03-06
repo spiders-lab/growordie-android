@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Unit test for User model
+ */
 public class UserTest extends Utils {
     private User user;
 
@@ -25,6 +28,7 @@ public class UserTest extends Utils {
         User deserialized2 = (User) deserialize(serialized2);
 
         Assert.assertEquals(deserialized1.getUsername(), deserialized2.getUsername());
+        Assert.assertEquals(deserialized1.getId(), deserialized2.getId());
         Assert.assertEquals(user.getUsername(), deserialized1.getUsername());
         Assert.assertEquals(user.getUsername(), deserialized2.getUsername());
     }

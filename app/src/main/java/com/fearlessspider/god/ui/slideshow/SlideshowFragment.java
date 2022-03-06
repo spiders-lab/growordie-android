@@ -12,6 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fearlessspider.god.databinding.FragmentSlideshowBinding;
 
+/**
+ * @class
+ */
 public class SlideshowFragment extends Fragment {
 
     private FragmentSlideshowBinding binding;

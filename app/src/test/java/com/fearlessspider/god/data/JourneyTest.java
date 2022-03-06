@@ -8,6 +8,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 
+/**
+ * Unit test for Journey model
+ */
 public class JourneyTest extends Utils {
     private Journey journey;
 
@@ -25,6 +28,8 @@ public class JourneyTest extends Utils {
         Journey deserialized2 = (Journey) deserialize(serialized2);
 
         Assert.assertEquals(deserialized1.getName(), deserialized2.getName());
+        Assert.assertEquals(deserialized1.getId(), deserialized2.getId());
+        Assert.assertEquals(deserialized1.getUserId(), deserialized2.getUserId());
         Assert.assertEquals(journey.getName(), deserialized1.getName());
         Assert.assertEquals(journey.getName(), deserialized2.getName());
     }
