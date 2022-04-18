@@ -32,6 +32,16 @@ android {
     buildFeatures {
         viewBinding true
     }
+    testOptions {
+        devices {
+            pixel3api28(com.android.build.api.dsl.ManagedVirtualDevice) {
+                device = "Pixel 3a"
+                apiLevel = 28
+                systemImageSource = "google"
+                abi = "x86"
+            }
+        }
+    }
 }
 
 dependencies {
