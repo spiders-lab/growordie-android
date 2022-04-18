@@ -34,4 +34,40 @@ public class HomeTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void CheckExerciseCounterOnScreen() {
+        FragmentScenario.launchInContainer(HomeFragment.class);
+
+        onView(withText("Exercises")).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void CheckTrackCounterOnScreen() {
+        FragmentScenario.launchInContainer(HomeFragment.class);
+
+        onView(withText("Tracks")).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void CheckJourneyCounterOnScreen() {
+        FragmentScenario.launchInContainer(HomeFragment.class);
+
+        onView(withText("Journeys")).check(matches(isDisplayed()));
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
