@@ -6,42 +6,59 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fearlessspider.god.R;
 import com.fearlessspider.god.db.Journey;
 
-import java.util.ArrayList;
-import java.util.List;
 
+public class JourneyAdapter extends ListAdapter<Journey, JourneyAdapter.ViewHolder> {
 
-public class JourneyAdapter extends RecyclerView.Adapter<JourneyAdapter.ViewHolder> {
-    private List<Journey> journeyList = new ArrayList<>();
+    public JourneyAdapter(@NonNull DiffUtil.ItemCallback<Journey> diffCallback) {
+        super(diffCallback);
+    }
 
     @NonNull
     @Override
     public JourneyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_journey_item, parent, false);
-        return new JourneyAdapter.ViewHolder(itemView);
+        return ViewHolder.create(parent);
     }
 
     @Override
     public void onBindViewHolder(@NonNull JourneyAdapter.ViewHolder holder, int position) {
-        Journey journey = journeyList.get(position);
-        holder.textViewName.setText(journey.getName());
+        Journey journey = getItem(position);
+        holder.bind(journey.getName());
     }
 
-    @Override
-    public int getItemCount() {
-        return journeyList.size();
+    static class JourneyDiff extends DiffUtil.ItemCallback<Journey> {
+        @Override
+        public boolean areItemsTheSame(@NonNull Journey oldItem, @NonNull Journey newItem) {
+            return oldItem == newItem;
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Journey oldItem, @NonNull Journey newItem) {
+            return oldItem.getName().equals(newItem.getName());
+        }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewName;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView textViewName;
 
         private ViewHolder(View view) {
             super(view);
             textViewName = itemView.findViewById(R.id.text_view_journey_name);
+        }
+
+        public void bind(String text) {
+            textViewName.setText(text);
+        }
+
+        static ViewHolder create(ViewGroup viewGroup) {
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fragment_journey_item, viewGroup, false);
+            return new ViewHolder(view);
         }
     }
 }

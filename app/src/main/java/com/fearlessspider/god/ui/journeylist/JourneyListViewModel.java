@@ -1,22 +1,35 @@
 package com.fearlessspider.god.ui.journeylist;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+
+import com.fearlessspider.god.db.Journey;
+import com.fearlessspider.god.repository.JourneyRepository;
+
+import java.util.List;
 
 /**
  * Journey List fragment model
  */
-public class JourneyListViewModel extends ViewModel {
+public class JourneyListViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<String> mText;
+    private JourneyRepository journeyRepository;
+    private LiveData<List<Journey>> journeyList;
 
-    public JourneyListViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is journey list fragment");
+    public JourneyListViewModel(Application application) {
+        super(application);
+
+        journeyRepository = new JourneyRepository(application);
+        journeyList = journeyRepository.getJourneyList();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    LiveData<List<Journey>> getAll() {
+        return journeyList;
+    }
+
+    void insert(Journey journey) {
+        journeyRepository.insert(journey);
     }
 }

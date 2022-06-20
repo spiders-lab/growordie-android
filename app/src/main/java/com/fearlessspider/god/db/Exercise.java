@@ -26,6 +26,7 @@ public class Exercise {
     public Exercise(@NonNull Integer id, @NonNull String comment) {
         this.id = id;
         this.comment = comment;
+        this.createdAt = new Date();
     }
 
     @NonNull

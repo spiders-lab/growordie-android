@@ -54,7 +54,7 @@ public class JourneyDaoTest {
     public void getAllJourneys() throws Exception {
         Journey journey = new Journey(0, "Health");
         journeyDao.insert(journey);
-        Journey journey2 = new Journey(0, "Books");
+        Journey journey2 = new Journey(1, "Books");
         journeyDao.insert(journey2);
         List<Journey> allJourneys = LiveDataTestUtil.getValue(journeyDao.getAlphabetizedJourneys());
         Assert.assertEquals(allJourneys.get(0).getName(), journey.getName());
@@ -65,7 +65,7 @@ public class JourneyDaoTest {
     public void deleteAll() throws Exception {
         Journey journey = new Journey(0, "Aaaa");
         journeyDao.insert(journey);
-        Journey journey1 = new Journey(0, "Bbbb");
+        Journey journey1 = new Journey(1, "Bbbb");
         journeyDao.insert(journey1);
         journeyDao.deleteAll();
         List<Journey> allJourneys = LiveDataTestUtil.getValue(journeyDao.getAlphabetizedJourneys());
