@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, Journey.class, Track.class, Exercise.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Journey.class, Track.class, Exercise.class, Step.class}, version = 1, exportSchema = false)
 @TypeConverters({TimestampConverter.class})
 public abstract class GODDatabase extends RoomDatabase {
 
@@ -21,6 +21,7 @@ public abstract class GODDatabase extends RoomDatabase {
     public abstract JourneyDao journeyDao();
     public abstract TrackDao trackDao();
     public abstract ExerciseDao exerciseDao();
+    public abstract StepDao stepDao();
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile GODDatabase INSTANCE;
