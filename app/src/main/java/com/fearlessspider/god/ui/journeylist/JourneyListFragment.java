@@ -17,24 +17,26 @@ import com.fearlessspider.god.databinding.FragmentJourneyListBinding;
  */
 public class JourneyListFragment extends Fragment {
 
+    private JourneyListViewModel journeyListViewModel;
     private FragmentJourneyListBinding binding;
+    private JourneyAdapter journeyAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        JourneyListViewModel journeyListViewModel =
-                new ViewModelProvider(this).get(JourneyListViewModel.class);
-
         binding = FragmentJourneyListBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
 
-        final TextView textView = binding.textJourneyList;
-        journeyListViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        return binding.getRoot();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setupListAdapter() {
+        journeyListViewModel =
+                new ViewModelProvider(this).get(JourneyListViewModel.class);
+        journeyAdapter = new JourneyAdapter();
     }
 }
