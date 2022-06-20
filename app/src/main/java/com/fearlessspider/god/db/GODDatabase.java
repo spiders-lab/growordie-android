@@ -15,20 +15,20 @@ import java.util.concurrent.Executors;
 
 @Database(entities = {User.class, Journey.class, Track.class, Exercise.class}, version = 1, exportSchema = false)
 @TypeConverters({TimestampConverter.class})
-abstract class GODDatabase extends RoomDatabase {
+public abstract class GODDatabase extends RoomDatabase {
 
-    abstract UserDao userDao();
-    abstract JourneyDao journeyDao();
-    abstract TrackDao trackDao();
-    abstract ExerciseDao exerciseDao();
+    public abstract UserDao userDao();
+    public abstract JourneyDao journeyDao();
+    public abstract TrackDao trackDao();
+    public abstract ExerciseDao exerciseDao();
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile GODDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
+    public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static GODDatabase getDatabase(final Context context) {
+    public static GODDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (GODDatabase.class) {
                 if (INSTANCE == null) {
