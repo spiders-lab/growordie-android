@@ -5,8 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.fearlessspider.god.db.GODDatabase;
-import com.fearlessspider.god.db.Journey;
-import com.fearlessspider.god.db.JourneyDao;
+import com.fearlessspider.god.db.Track;
+import com.fearlessspider.god.db.TrackDao;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class TrackRepository {
     public TrackRepository(Application application) {
         GODDatabase db = GODDatabase.getDatabase(application);
         trackDao = db.trackDao();
-        trackList = trackDao.getTracks();
+        trackList = trackDao.getAlphabetizedTracks();
     }
 
     public LiveData<List<Track>> getTrackList() {

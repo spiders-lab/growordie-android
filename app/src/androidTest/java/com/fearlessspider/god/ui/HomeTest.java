@@ -27,7 +27,7 @@ public class HomeTest {
     public void checkStepOnScreen() {
         FragmentScenario.launchInContainer(HomeFragment.class);
 
-        onView(withText("Steps")).check(matches(isDisplayed()));
+        onView(withText("steps")).check(matches(isDisplayed()));
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {

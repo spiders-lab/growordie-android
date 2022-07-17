@@ -40,6 +40,6 @@ public class MainActivityTest {
                 .perform(NavigationViewActions.navigateTo(R.id.nav_home));
 
         // Check that Activity was opened.
-        onView(withId(R.id.text_home)).check(matches(withText(R.string.steps)));
+        onView(withId(R.id.stepsleft)).check(matches(withText(R.string.steps)));
     }
 }
