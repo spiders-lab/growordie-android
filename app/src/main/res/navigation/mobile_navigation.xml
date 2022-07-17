@@ -12,6 +12,12 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/nav_achievements"
+        android:name="com.fearlessspider.god.ui.home.HomeAchievements"
+        android:label="@string/menu_achievements"
+        tools:layout="@layout/fragment_achievements" />
+
+    <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.fearlessspider.god.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
