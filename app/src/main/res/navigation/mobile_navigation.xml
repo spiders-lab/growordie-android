@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_achievements"
-        android:name="com.fearlessspider.god.ui.home.HomeAchievements"
+        android:name="com.fearlessspider.god.ui.acheivements.AchievementsFragment"
         android:label="@string/menu_achievements"
         tools:layout="@layout/fragment_achievements" />
 

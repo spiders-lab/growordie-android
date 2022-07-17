@@ -2,11 +2,11 @@ package com.fearlessspider.god.ui.acheivements;
 
 import androidx.fragment.app.Fragment;
 
-import com.fearlessspider.god.databinding.FragmentAcheivementsBinding;
+import com.fearlessspider.god.databinding.FragmentAchievementsBinding;
 
-public class AcheivementsFragment extends Fragment {
+public class AchievementsFragment extends Fragment {
 
-    private FragmentAcheivementsBinding binding;
+    private FragmentAchievementsBinding binding;
 
     @Override
     public void onDestroyView() {
