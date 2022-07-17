@@ -18,7 +18,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/widgettext"
+        android:id="@+id/widgetstepstext"
         android:gravity="center_horizontal"
         android:shadowColor="#000"
         android:shadowDx="0"
