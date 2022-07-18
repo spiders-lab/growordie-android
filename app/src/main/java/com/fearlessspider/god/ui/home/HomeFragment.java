@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fearlessspider.god.databinding.FragmentHomeBinding;
 
+
 /**
  * Home fragment
  */
@@ -27,7 +28,7 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
+        final TextView textView = binding.stepsleft;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }

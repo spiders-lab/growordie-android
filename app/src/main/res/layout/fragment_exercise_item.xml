@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.journeylist.JourneyItemFragment">
+    tools:context=".ui.exerciselist.ExerciseItemFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/text_view_journey_name"
+        android:id="@+id/text_view_exercise_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/goal" />

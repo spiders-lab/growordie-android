@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "journeys")
-public class Journey {
+@Entity(tableName = "steps")
+public class Step {
 
     @PrimaryKey
     @NonNull
@@ -16,16 +16,16 @@ public class Journey {
     private Integer id;
 
     @NonNull
-    @ColumnInfo(name = "name")
-    private String name;
+    @ColumnInfo(name = "steps")
+    private Integer steps;
 
     @NonNull
     @ColumnInfo(name = "createdAt")
     private Date createdAt;
 
-    public Journey(@NonNull Integer id, @NonNull String name) {
+    public Step(@NonNull Integer id, @NonNull Integer steps) {
         this.id = id;
-        this.name = name;
+        this.steps = steps;
         this.createdAt = new Date();
     }
 
@@ -35,8 +35,8 @@ public class Journey {
     }
 
     @NonNull
-    public String getName() {
-        return this.name;
+    public Integer getSteps() {
+        return this.steps;
     }
 
     @NonNull
