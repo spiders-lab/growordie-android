@@ -2,14 +2,13 @@
     <string name="app_name">G.O.D.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">G.O.D.</string>
+    <string name="nav_header_subtitle">Grow or Die</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_achievements">Achievements</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="menu_journey">Journey</string>
     <string name="journey">Journey</string>
     <string name="journey_list">Journey List</string>
