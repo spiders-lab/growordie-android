@@ -18,7 +18,7 @@ public class StepRepository {
     public StepRepository(Application application) {
         GODDatabase db = GODDatabase.getDatabase(application);
         stepDao = db.stepDao();
-        stepList =stepDao.getSteps();
+        stepList = stepDao.getSteps();
     }
 
     public LiveData<List<Step>> getStepList() {
