@@ -1,6 +1,7 @@
 package com.fearlessspider.god.components;
 
 import android.app.AlarmManager;
+import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -20,6 +21,7 @@ import android.os.IBinder;
 import com.fearlessspider.god.BuildConfig;
 import com.fearlessspider.god.MainActivity;
 import com.fearlessspider.god.R;
+import com.fearlessspider.god.repository.StepRepository;
 import com.fearlessspider.god.utils.API26Wrapper;
 import com.fearlessspider.god.utils.DateUtil;
 import com.fearlessspider.god.utils.Logger;
@@ -41,6 +43,8 @@ public class SensorListener extends Service implements SensorEventListener {
     private static long lastSaveTime;
 
     private final BroadcastReceiver shutdownReceiver = new ShutdownReceiver();
+
+    private StepRepository stepRepository;
 
     @Override
     public void onAccuracyChanged(final Sensor sensor, int accuracy) {
@@ -69,20 +73,20 @@ public class SensorListener extends Service implements SensorEventListener {
             if (BuildConfig.DEBUG) Logger.log(
                     "saving steps: steps=" + steps + " lastSave=" + lastSaveSteps +
                             " lastSaveTime=" + new Date(lastSaveTime));
-            Database db = Database.getInstance(this);
-            if (db.getSteps(DateUtil.getToday()) == Integer.MIN_VALUE) {
+            stepRepository = new StepRepository((Application) this.getApplicationContext());
+
+            if (stepRepository.getSteps(DateUtil.getToday()) == Integer.MIN_VALUE) {
                 int pauseDifference = steps -
                         getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
                                 .getInt("pauseCount", steps);
-                db.insertNewDay(DateUtil.getToday(), steps - pauseDifference);
+                stepRepository.insert(steps - pauseDifference);
                 if (pauseDifference > 0) {
                     // update pauseCount for the new day
                     getSharedPreferences("G.O.D.", Context.MODE_PRIVATE).edit()
                             .putInt("pauseCount", steps).commit();
                 }
             }
-            db.saveCurrentSteps(steps);
-            db.close();
+
             lastSaveSteps = steps;
             lastSaveTime = System.currentTimeMillis();
             showNotification(); // update notification
@@ -156,11 +160,13 @@ public class SensorListener extends Service implements SensorEventListener {
         if (BuildConfig.DEBUG) Logger.log("getNotification");
         SharedPreferences prefs = context.getSharedPreferences("G.O.D.", Context.MODE_PRIVATE);
         int goal = prefs.getInt("goal", 10000);
-        Database db = Database.getInstance(context);
-        int today_offset = db.getSteps(Util.getToday());
+
+        StepRepository stepRepository = new StepRepository((Application) context.getApplicationContext());
+
+        int today_offset = stepRepository.getSteps(DateUtil.getToday());
         if (steps == 0)
-            steps = db.getCurrentSteps(); // use saved value if we haven't anything better
-        db.close();
+            steps = stepRepository.getCurrentSteps(); // use saved value if we haven't anything better
+
         Notification.Builder notificationBuilder =
                 Build.VERSION.SDK_INT >= 26 ? API26Wrapper.getNotificationBuilder(context) :
                         new Notification.Builder(context);
