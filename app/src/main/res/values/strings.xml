@@ -2,14 +2,13 @@
     <string name="app_name">G.O.D.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_title">G.O.D.</string>
+    <string name="nav_header_subtitle">Grow or Die</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_achievements">Achievements</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="menu_journey">Journey</string>
     <string name="journey">Journey</string>
     <string name="journey_list">Journey List</string>
@@ -51,5 +50,12 @@
     <string name="no_sensor_explain">This app requires a dedicated hardware step sensor - which your device does not have. This app won\'t run on your device.</string>
     <string name="permission_external_storage">No permission to access external storage</string>
     <string name="notification_settings">Notification settings</string>
+    <string name="level">LEVEL</string>
+    <string name="more_steps_to_reach_next_level">more steps to reach next level</string>
+    <string name="more">More</string>
+    <string name="level_2">Level 2</string>
+    <string name="level_3">Level 3</string>
+    <string name="level_4">Level 4</string>
+    <string name="level_5">Level 5</string>
 
 </resources>

@@ -46,7 +46,7 @@ public class StepDaoTest {
     public void insertAndGetStep() throws Exception {
         Step step = new Step(0, 1);
         stepDao.insert(step);
-        List<Step> allSteps = LiveDataTestUtil.getValue(stepDao.getSteps());
+        List<Step> allSteps = LiveDataTestUtil.getValue(stepDao.getAllSteps());
         Assert.assertEquals(allSteps.get(0).getCreatedAt(), step.getCreatedAt());
     }
 
@@ -56,7 +56,7 @@ public class StepDaoTest {
         stepDao.insert(step);
         Step step1 = new Step(1, 2);
         stepDao.insert(step1);
-        List<Step> allStep = LiveDataTestUtil.getValue(stepDao.getSteps());
+        List<Step> allStep = LiveDataTestUtil.getValue(stepDao.getAllSteps());
         Assert.assertEquals(allStep.get(0).getCreatedAt(), step.getCreatedAt());
         Assert.assertEquals(allStep.get(1).getCreatedAt(), step1.getCreatedAt());
     }
@@ -68,7 +68,7 @@ public class StepDaoTest {
         Step step1 = new Step(1, 2);
         stepDao.insert(step1);
         stepDao.deleteAll();
-        List<Step> allSteps = LiveDataTestUtil.getValue(stepDao.getSteps());
+        List<Step> allSteps = LiveDataTestUtil.getValue(stepDao.getAllSteps());
         Assert.assertTrue(allSteps.isEmpty());
     }
 }

@@ -65,11 +65,13 @@ dependencies {
     implementation 'androidx.fragment:fragment:1.5.0'
     implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
     debugImplementation 'androidx.fragment:fragment-testing:1.5.0'
 
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
 
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:3.+'
 
     androidTestImplementation 'androidx.test:core:1.4.0'
 

@@ -25,10 +25,10 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="10dp"
             android:gravity="left"
-            android:text="ACHIEVEMENTS"
+            android:text="@string/achievements"
             android:textColor="#000"
             android:textSize="25dp"
-            android:textStyle="bold"></TextView>
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
     <androidx.cardview.widget.CardView
         android:layout_width="350dp"
@@ -59,7 +59,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_gravity="center"
-                      android:text="LEVEL"
+                      android:text="@string/level"
                       android:textColor="#000"
                       android:textSize="25dp"
                       android:textStyle="bold">
@@ -94,11 +94,11 @@
     </TextView>
     <Space
         android:layout_width="4dp"
-        android:layout_height="4dp"></Space>
+        android:layout_height="4dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="more steps to reach next level"
+        android:text="@string/more_steps_to_reach_next_level"
         android:textSize="20dp">
 
     </TextView>
@@ -148,7 +148,7 @@
                 android:textSize="20dp"
                 android:layout_marginStart="145dp"
                 android:textColor="#787676"
-                android:text="More">
+                android:text="@string/more">
 
             </TextView>
         </LinearLayout>
@@ -172,7 +172,7 @@
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:text="Level 2"
+                   android:text="@string/level_2"
                    android:layout_marginStart="15dp"
                    android:textSize="20dp">
 
@@ -195,7 +195,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Level 3"
+                    android:text="@string/level_3"
                     android:layout_marginStart="15dp"
                     android:textSize="20dp">
 
@@ -218,7 +218,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Level 4"
+                    android:text="@string/level_4"
                     android:layout_marginStart="15dp"
                     android:textSize="20dp">
 
@@ -241,7 +241,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Level 5"
+                    android:text="@string/level_5"
                     android:layout_marginStart="15dp"
                     android:textSize="20dp">
 
