@@ -15,8 +15,8 @@ public interface StepDao {
     @Query("SELECT * FROM steps ORDER BY id ASC")
     LiveData<List<Step>> getAllSteps();
 
-    @Query("SELECT SUM(steps) FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
-    LiveData<List<Step>> getSteps(Date start, Date end);
+    @Query("SELECT SUM(steps) AS sum_steps FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
+    Integer getSteps(Date start, Date end);
 
     @Query("SELECT * FROM steps WHERE steps > 0 AND createdAt < :today ORDER BY id ASC")
     LiveData<List<Step>> getStepsWithoutToday(Date today);

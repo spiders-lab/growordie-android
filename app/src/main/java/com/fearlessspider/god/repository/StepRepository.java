@@ -22,6 +22,9 @@ public class StepRepository {
         stepList = stepDao.getAllSteps();
     }
 
+    public Integer getSteps(Date start, Date end) {
+        return stepDao.getSteps(start, end);
+    }
     public LiveData<List<Step>> getStepList() {
         return stepList;
     }
