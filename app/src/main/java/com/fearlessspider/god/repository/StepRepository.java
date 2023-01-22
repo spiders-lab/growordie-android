@@ -22,12 +22,15 @@ public class StepRepository {
         stepList = stepDao.getAllSteps();
     }
 
+    public Integer getStepsCount(Date start, Date end) {
+        return stepDao.getStepsCount(start, end);
+    }
     public LiveData<List<Step>> getStepList() {
         return stepList;
     }
 
-    public LiveData<Step> getCurrentSteps() {
-        return stepDao.getCurrentSteps(new Date());
+    public LiveData<Step> getCurrentStep() {
+        return stepDao.getCurrentStep(new Date());
     }
 
     public void insert(int steps) {
