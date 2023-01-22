@@ -38,10 +38,10 @@ android {
                 device = "Pixel 3a"
                 apiLevel = 28
                 systemImageSource = "google"
-                abi = "x86"
             }
         }
     }
+    namespace 'com.fearlessspider.god'
 }
 
 dependencies {
