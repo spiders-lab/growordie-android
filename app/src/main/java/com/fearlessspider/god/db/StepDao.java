@@ -16,13 +16,13 @@ public interface StepDao {
     LiveData<List<Step>> getAllSteps();
 
     @Query("SELECT SUM(steps) AS sum_steps FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
-    Integer getSteps(Date start, Date end);
+    Integer getStepsCount(Date start, Date end);
 
-    @Query("SELECT * FROM steps WHERE steps > 0 AND createdAt < :today ORDER BY id ASC")
-    LiveData<List<Step>> getStepsWithoutToday(Date today);
+    @Query("SELECT * FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
+    LiveData<List<Step>> getStepsInRange(Date start, Date end);
 
     @Query("SELECT * FROM steps WHERE createdAt = :today LIMIT 1")
-    LiveData<Step> getCurrentSteps(Date today);
+    LiveData<Step> getCurrentStep(Date today);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Step step);

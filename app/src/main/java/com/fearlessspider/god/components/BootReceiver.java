@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 
 import com.fearlessspider.god.BuildConfig;
+import com.fearlessspider.god.db.Step;
 import com.fearlessspider.god.repository.StepRepository;
 import com.fearlessspider.god.utils.API26Wrapper;
 import com.fearlessspider.god.utils.Logger;
@@ -27,13 +28,10 @@ public class BootReceiver extends BroadcastReceiver {
         if (!prefs.getBoolean("correctShutdown", false)) {
             if (BuildConfig.DEBUG) Logger.log("Incorrect shutdown");
             // can we at least recover some steps?
-            int steps = Math.max(0, stepRepository.getCurrentSteps().getValue().getSteps());
+            int steps = Math.max(0, stepRepository.getCurrentStep().getValue().getSteps());
             if (BuildConfig.DEBUG) Logger.log("Trying to recover " + steps + " steps");
-            stepRepository.addToLastEntry(steps);
+            stepRepository.update(new Step(0, 0));
         }
-        // last entry might still have a negative step value, so remove that
-        // row if that's the case
-        stepRepository.removeNegativeEntries();
         stepRepository.saveCurrentSteps(0);
 
         prefs.edit().remove("correctShutdown").apply();

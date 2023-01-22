@@ -75,7 +75,7 @@ public class SensorListener extends Service implements SensorEventListener {
                             " lastSaveTime=" + new Date(lastSaveTime));
             stepRepository = new StepRepository((Application) this.getApplicationContext());
 
-            if (stepRepository.getSteps(new Date(DateUtil.getToday()), new Date()) == Integer.MIN_VALUE) {
+            if (stepRepository.getStepsCount(new Date(DateUtil.getToday()), new Date()) == Integer.MIN_VALUE) {
                 int pauseDifference = steps -
                         getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
                                 .getInt("pauseCount", steps);
@@ -163,9 +163,9 @@ public class SensorListener extends Service implements SensorEventListener {
 
         StepRepository stepRepository = new StepRepository((Application) context.getApplicationContext());
 
-        int today_offset = stepRepository.getSteps(new Date(DateUtil.getToday()), new Date());
+        int today_offset = stepRepository.getStepsCount(new Date(DateUtil.getToday()), new Date());
         if (steps == 0)
-            steps = stepRepository.getCurrentSteps().getValue().getSteps(); // use saved value if we haven't anything better
+            steps = stepRepository.getCurrentStep().getValue().getSteps(); // use saved value if we haven't anything better
 
         Notification.Builder notificationBuilder =
                 Build.VERSION.SDK_INT >= 26 ? API26Wrapper.getNotificationBuilder(context) :
