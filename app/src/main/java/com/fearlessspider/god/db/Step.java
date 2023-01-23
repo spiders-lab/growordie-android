@@ -29,6 +29,14 @@ public class Step {
         this.createdAt = new Date();
     }
 
+    public void setId(@NonNull Integer id) {
+        this.id = id;
+    }
+
+    public void setSteps(@NonNull Integer steps) {
+        this.steps = steps;
+    }
+
     @NonNull
     public Integer getId() {
         return this.id;
