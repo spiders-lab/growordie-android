@@ -21,6 +21,7 @@ import android.os.IBinder;
 import com.fearlessspider.god.BuildConfig;
 import com.fearlessspider.god.MainActivity;
 import com.fearlessspider.god.R;
+import com.fearlessspider.god.db.Step;
 import com.fearlessspider.god.repository.StepRepository;
 import com.fearlessspider.god.utils.API26Wrapper;
 import com.fearlessspider.god.utils.DateUtil;
@@ -39,7 +40,7 @@ public class SensorListener extends Service implements SensorEventListener {
     private final static int SAVE_OFFSET_STEPS = 500;
 
     private static int steps;
-    private static int lastSaveSteps;
+    private static int lastSaveSteps = 0;
     private static long lastSaveTime;
 
     private final BroadcastReceiver shutdownReceiver = new ShutdownReceiver();
@@ -87,6 +88,7 @@ public class SensorListener extends Service implements SensorEventListener {
                 }
             }
 
+            stepRepository.saveCurrentSteps(steps);
             lastSaveSteps = steps;
             lastSaveTime = System.currentTimeMillis();
             showNotification(); // update notification
@@ -165,8 +167,11 @@ public class SensorListener extends Service implements SensorEventListener {
 
         int today_offset = stepRepository.getStepsCount(new Date(DateUtil.getToday()), new Date());
         if (steps == 0)
-            steps = stepRepository.getCurrentStep().getValue().getSteps(); // use saved value if we haven't anything better
-
+            try {
+                steps = stepRepository.getCurrentStep().getValue().getSteps(); // use saved value if we haven't anything better
+            } catch (NullPointerException exception) {
+                stepRepository.insert(0);
+            }
         Notification.Builder notificationBuilder =
                 Build.VERSION.SDK_INT >= 26 ? API26Wrapper.getNotificationBuilder(context) :
                         new Notification.Builder(context);
@@ -188,7 +193,7 @@ public class SensorListener extends Service implements SensorEventListener {
         notificationBuilder.setPriority(Notification.PRIORITY_MIN).setShowWhen(false)
                 .setContentIntent(PendingIntent
                         .getActivity(context, 0, new Intent(context, MainActivity.class),
-                                PendingIntent.FLAG_UPDATE_CURRENT))
+                                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT))
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp).setOngoing(true);
         return notificationBuilder.build();
     }

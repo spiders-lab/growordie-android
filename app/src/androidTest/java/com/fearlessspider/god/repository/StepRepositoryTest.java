@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.fearlessspider.god.db.GODDatabase;
 import com.fearlessspider.god.db.Step;
+import com.fearlessspider.god.utils.Logger;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class StepRepositoryTest {
         stepRepository.getStepList().observeForever(stepListObserver);
         stepRepository.insert(10000);
 
-        Log.d("T", ""+ stepRepository.getStepList());
+        Logger.log("steps"+ stepRepository.getStepList());
         Assert.assertEquals(stepRepository.getStepList(), stepsList);
     }
 }

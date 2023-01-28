@@ -18,6 +18,9 @@ public interface StepDao {
     @Query("SELECT SUM(steps) AS sum_steps FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
     Integer getStepsCount(Date start, Date end);
 
+    @Query("SELECT SUM(steps) AS sum_steps FROM steps ORDER BY id ASC")
+    Integer getTotalStepsCount();
+
     @Query("SELECT * FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
     LiveData<List<Step>> getStepsInRange(Date start, Date end);
 

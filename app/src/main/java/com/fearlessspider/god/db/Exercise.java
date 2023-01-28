@@ -10,8 +10,7 @@ import java.util.Date;
 @Entity(tableName = "exercises")
 public class Exercise {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private Integer id;
 
@@ -23,10 +22,13 @@ public class Exercise {
     @ColumnInfo(name = "createdAt")
     private Date createdAt;
 
-    public Exercise(@NonNull Integer id, @NonNull String comment) {
-        this.id = id;
+    public Exercise(@NonNull String comment) {
         this.comment = comment;
         this.createdAt = new Date();
+    }
+
+    public void setId(@NonNull Integer id) {
+        this.id = id;
     }
 
     @NonNull

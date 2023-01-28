@@ -30,7 +30,7 @@ public class BootReceiver extends BroadcastReceiver {
             // can we at least recover some steps?
             int steps = Math.max(0, stepRepository.getCurrentStep().getValue().getSteps());
             if (BuildConfig.DEBUG) Logger.log("Trying to recover " + steps + " steps");
-            stepRepository.update(new Step(0, 0));
+            stepRepository.update(new Step(0));
         }
         stepRepository.saveCurrentSteps(0);
 

@@ -12,10 +12,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.fearlessspider.god.databinding.FragmentProfileBinding;
 
+import java.util.Locale;
+
 /**
  * Profile fragment
  */
 public class ProfileFragment extends Fragment {
+
+    public static final float DEFAULT_STEP_SIZE = Locale.getDefault() == Locale.US ? 2.5f : 75f;;
+    public static final String DEFAULT_STEP_UNIT =Locale.getDefault() == Locale.US ? "ft" : "cm" ;
+    public static final float DEFAULT_GOAL = 10000;
 
     private FragmentProfileBinding binding;
 

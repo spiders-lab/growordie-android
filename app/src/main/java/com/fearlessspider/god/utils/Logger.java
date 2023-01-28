@@ -45,18 +45,6 @@ public abstract class Logger {
     public static void log(String msg) {
         if (!BuildConfig.DEBUG) return;
         Log.d(APP, msg);
-        try {
-            if (fw == null) {
-                fw = new FileWriter(new File(
-                        Environment.getExternalStorageDirectory().toString() + "/" + APP + ".txt"),
-                        true);
-            }
-            date.setTime(System.currentTimeMillis());
-            fw.write(date.toLocaleString() + " - " + msg + "\n");
-            fw.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     protected void finalize() throws Throwable {
