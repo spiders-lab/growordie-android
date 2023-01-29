@@ -1,6 +1,7 @@
 package com.fearlessspider.god.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -23,8 +24,23 @@ public class StepRepository {
     }
 
     public Integer getStepsCount(Date start, Date end) {
-        return stepDao.getStepsCount(start, end);
+        Integer steps = stepDao.getStepsCount(start, end);
+        if (steps == null) {
+            return 0;
+        } else {
+            return steps;
+        }
     }
+
+    public Integer getTotalStepsCount() {
+        Integer steps = stepDao.getTotalStepsCount();
+        if (steps == null) {
+            return 0;
+        } else {
+            return steps;
+        }
+    }
+
     public LiveData<List<Step>> getStepList() {
         return stepList;
     }
@@ -35,7 +51,7 @@ public class StepRepository {
 
     public void insert(int steps) {
         GODDatabase.databaseWriteExecutor.execute(() -> {
-            stepDao.insert(new Step(0, steps));
+            stepDao.insert(new Step(steps));
         });
     }
 
@@ -52,6 +68,14 @@ public class StepRepository {
     }
 
     public void saveCurrentSteps(Integer steps) {
-
+        GODDatabase.databaseWriteExecutor.execute(() -> {
+            Step step = stepDao.getCurrentStep(new Date()).getValue();
+            if (step != null) {
+                step.setSteps(steps);
+                stepDao.updateStep(step);
+            } else {
+                stepDao.insert(new Step(steps));
+            }
+        });
     }
 }

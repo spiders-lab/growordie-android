@@ -15,11 +15,11 @@ import com.fearlessspider.god.R;
  */
 public class Widget extends AppWidgetProvider {
     public static RemoteViews updateWidget(final int appWidgetId, final Context context, final int steps) {
-        final PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, new Intent(context, MainActivity.class), 0);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(context, appWidgetId, new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE);
         final RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget);
 
         view.setOnClickPendingIntent(R.id.widget, pendingIntent);
-        view.setTextViewText(R.id.widgetsteps, String.valueOf(0));
+        view.setTextViewText(R.id.widgetsteps, String.valueOf(steps));
 
         return view;
     }

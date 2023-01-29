@@ -10,8 +10,7 @@ import java.util.Date;
 @Entity(tableName = "tracks")
 public class Track {
 
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private Integer id;
 
@@ -23,10 +22,13 @@ public class Track {
     @ColumnInfo(name = "createdAt")
     private Date createdAt;
 
-    public Track(@NonNull Integer id, @NonNull String name) {
-        this.id = id;
+    public Track(@NonNull String name) {
         this.name = name;
         this.createdAt = new Date();
+    }
+
+    public void setId(@NonNull Integer id) {
+        this.id = id;
     }
 
     @NonNull
