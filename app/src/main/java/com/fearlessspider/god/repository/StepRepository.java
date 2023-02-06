@@ -17,11 +17,13 @@ public class StepRepository {
 
     private StepDao stepDao;
     private LiveData<List<Step>> stepList;
+    private LiveData<List<Step>> lastEntries;
 
     public StepRepository(Application application) {
         GODDatabase db = GODDatabase.getDatabase(application);
         stepDao = db.stepDao();
         stepList = stepDao.getAllSteps();
+        lastEntries = stepDao.getLastEntries();
     }
 
     public Integer getStepsCount(Date start, Date end) {
@@ -34,12 +36,7 @@ public class StepRepository {
     }
 
     public Integer getCurrentStepsCount() {
-        Integer steps = stepDao.getCurrentStepsCount(new Date(DateUtil.getToday()));
-        if (steps == null) {
-            return 0;
-        } else {
-            return steps;
-        }
+        return stepDao.getCurrentStepsCount(new Date(DateUtil.getToday()));
     }
 
     public Integer getTotalStepsCount() {
@@ -55,6 +52,9 @@ public class StepRepository {
         return stepList;
     }
 
+    public LiveData<List<Step>> getLastEntries() {
+        return lastEntries;
+    }
     public Step getCurrentStep() {
         return stepDao.getCurrentStep(new Date(DateUtil.getToday()));
     }

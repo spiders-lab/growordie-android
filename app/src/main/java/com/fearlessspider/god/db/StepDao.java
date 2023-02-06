@@ -15,6 +15,9 @@ public interface StepDao {
     @Query("SELECT * FROM steps ORDER BY id ASC")
     LiveData<List<Step>> getAllSteps();
 
+    @Query("SELECT * FROM steps ORDER BY id DESC LIMIT 7")
+    LiveData<List<Step>> getLastEntries();
+
     @Query("SELECT SUM(steps) AS sum_steps FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
     Integer getStepsCount(Date start, Date end);
 

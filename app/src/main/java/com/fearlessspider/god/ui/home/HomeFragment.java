@@ -29,6 +29,7 @@ import com.fearlessspider.god.BuildConfig;
 import com.fearlessspider.god.R;
 import com.fearlessspider.god.components.SensorListener;
 import com.fearlessspider.god.databinding.FragmentHomeBinding;
+import com.fearlessspider.god.db.Step;
 import com.fearlessspider.god.models.StepViewModel;
 import com.fearlessspider.god.repository.StepRepository;
 import com.fearlessspider.god.ui.profile.ProfileFragment;
@@ -37,6 +38,7 @@ import com.fearlessspider.god.utils.Logger;
 
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.BarModel;
 import org.eazegraph.lib.models.PieModel;
 
 import java.text.NumberFormat;
@@ -112,9 +114,12 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onResume() {
         super.onResume();
 
+        todayoffset = stepViewModel.getTotalStepsCount();
         SharedPreferences prefs = getActivity().getSharedPreferences("G.O.D.", Context.MODE_PRIVATE);
 
         goal = prefs.getInt("goal", (int) ProfileFragment.DEFAULT_GOAL);
+
+        since_boot = stepViewModel.getTotalStepsCount();
 
         int pauseDifference = since_boot - prefs.getInt("pauseCount", since_boot);
 
@@ -154,6 +159,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             if(BuildConfig.DEBUG) Logger.log(e);
             e.printStackTrace();
         }
+        stepViewModel.saveCurrentSteps(since_boot);
     }
 
     @Override
@@ -340,14 +346,33 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         SimpleDateFormat df= new SimpleDateFormat("E",Locale.getDefault());
         BarChart barChart =(BarChart) getView().findViewById(R.id.bargraph);
         if(barChart.getData().size()>0) barChart.clearChart();
-        int steps;
-        float distance ,stepsize=ProfileFragment.DEFAULT_STEP_SIZE;
-        boolean stepsize_cm=true;
-        if(!showSteps){
-            SharedPreferences prefs = getActivity().getSharedPreferences("pedometer",Context.MODE_PRIVATE);
-            stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
-            stepsize_cm=prefs.getString("stepsize_unit",ProfileFragment.DEFAULT_STEP_UNIT).equals("cm");}
         barChart.setShowDecimal(!showSteps);
+
+        stepViewModel.getLastEntries().observe(this, stepList -> {
+            float distance, stepsize=ProfileFragment.DEFAULT_STEP_SIZE;
+            boolean stepsize_cm=true;
+            if(!showSteps){
+                SharedPreferences prefs = getActivity().getSharedPreferences("G.O.D.",Context.MODE_PRIVATE);
+                stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
+                stepsize_cm=prefs.getString("stepsize_unit",ProfileFragment.DEFAULT_STEP_UNIT).equals("cm");
+            }
+            for(Step step : stepList) {
+                BarModel barModel = new BarModel(df.format(step.getCreatedAt()), 0, step.getSteps() > goal ? Color.parseColor("#69F0AE") : Color.parseColor("#40C4FF"));
+                if (showSteps) {
+                    barModel.setValue(step.getSteps());
+                } else {
+                    distance = step.getSteps() * stepsize;
+                    if (stepsize_cm) {
+                        distance /= 100000;
+                    } else {
+                        distance /= 5280;
+                    }
+                    distance = Math.round(distance * 1000) / 1000f;
+                    barModel.setValue(distance);
+                }
+                barChart.addBar(barModel);
+            }
+        });
     }
 
     private void setPiechart() {

@@ -19,13 +19,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
             android:gravity="left"
             android:text="TODAY"
             android:textColor="#000"
-            android:textSize="25dp"
-            android:textStyle="bold"></TextView>
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginStart="50dp"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="10dp" />
 
         <ImageView
             android:id="@+id/splitcounter"
@@ -42,15 +43,13 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/levels"
             android:layout_width="40dp"
             android:layout_height="43dp"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
             android:background="#545559"
             android:src="@drawable/editthree">
 
@@ -112,11 +111,9 @@
         android:id="@+id/relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        tools:layout_editor_absoluteY="100dp">
 
         <org.eazegraph.lib.charts.PieChart
             android:id="@+id/graph"

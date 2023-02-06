@@ -75,10 +75,7 @@ public class SensorListener extends Service implements SensorEventListener {
                     "saving steps: steps=" + steps + " lastSave=" + lastSaveSteps +
                             " lastSaveTime=" + new Date(lastSaveTime));
             stepRepository = new StepRepository((Application) this.getApplicationContext());
-            if (stepRepository.getCurrentStepsCount() == 0) {
-                if (BuildConfig.DEBUG) Logger.log(
-                        "saving steps: steps=" + steps + " lastSave=" + lastSaveSteps +
-                                " lastSaveTime=" + new Date(lastSaveTime));
+            if (stepRepository.getCurrentStepsCount() == null) {
                 int pauseDifference = steps -
                         getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
                                 .getInt("pauseCount", steps);
@@ -88,8 +85,11 @@ public class SensorListener extends Service implements SensorEventListener {
                     getSharedPreferences("G.O.D.", Context.MODE_PRIVATE).edit()
                             .putInt("pauseCount", steps).commit();
                 }
+            }
+            Step step = stepRepository.getCurrentStep();
+            if (step == null) {
+                stepRepository.insert(steps);
             } else {
-                Step step = stepRepository.getCurrentStep();
                 step.setSteps(steps);
                 stepRepository.update(step);
             }
@@ -169,12 +169,12 @@ public class SensorListener extends Service implements SensorEventListener {
 
         StepRepository stepRepository = new StepRepository((Application) context.getApplicationContext());
 
-        int today_offset = stepRepository.getCurrentStepsCount();
+        Integer today_offset = stepRepository.getCurrentStepsCount();
         Notification.Builder notificationBuilder =
                 Build.VERSION.SDK_INT >= 26 ? API26Wrapper.getNotificationBuilder(context) :
                         new Notification.Builder(context);
         if (steps > 0) {
-            if (today_offset == Integer.MIN_VALUE) today_offset = -steps;
+            if (today_offset == null) today_offset = 0;
             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
             notificationBuilder.setProgress(goal, today_offset + steps, false).setContentText(
                     today_offset + steps >= goal ?
