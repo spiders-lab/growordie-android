@@ -1,13 +1,14 @@
 package com.fearlessspider.god.repository;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.fearlessspider.god.db.GODDatabase;
 import com.fearlessspider.god.db.Step;
 import com.fearlessspider.god.db.StepDao;
+import com.fearlessspider.god.utils.DateUtil;
+import com.fearlessspider.god.utils.Logger;
 
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,15 @@ public class StepRepository {
         }
     }
 
+    public Integer getCurrentStepsCount() {
+        Integer steps = stepDao.getCurrentStepsCount(new Date(DateUtil.getToday()));
+        if (steps == null) {
+            return 0;
+        } else {
+            return steps;
+        }
+    }
+
     public Integer getTotalStepsCount() {
         Integer steps = stepDao.getTotalStepsCount();
         if (steps == null) {
@@ -45,8 +55,8 @@ public class StepRepository {
         return stepList;
     }
 
-    public LiveData<Step> getCurrentStep() {
-        return stepDao.getCurrentStep(new Date());
+    public Step getCurrentStep() {
+        return stepDao.getCurrentStep(new Date(DateUtil.getToday()));
     }
 
     public void insert(int steps) {
@@ -64,18 +74,6 @@ public class StepRepository {
     public void deleteAll() {
         GODDatabase.databaseWriteExecutor.execute(() -> {
             stepDao.deleteAll();
-        });
-    }
-
-    public void saveCurrentSteps(Integer steps) {
-        GODDatabase.databaseWriteExecutor.execute(() -> {
-            Step step = stepDao.getCurrentStep(new Date()).getValue();
-            if (step != null) {
-                step.setSteps(steps);
-                stepDao.updateStep(step);
-            } else {
-                stepDao.insert(new Step(steps));
-            }
         });
     }
 }

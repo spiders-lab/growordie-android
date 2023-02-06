@@ -75,8 +75,10 @@ public class SensorListener extends Service implements SensorEventListener {
                     "saving steps: steps=" + steps + " lastSave=" + lastSaveSteps +
                             " lastSaveTime=" + new Date(lastSaveTime));
             stepRepository = new StepRepository((Application) this.getApplicationContext());
-
-            if (stepRepository.getStepsCount(new Date(DateUtil.getToday()), new Date()) == Integer.MIN_VALUE) {
+            if (stepRepository.getCurrentStepsCount() == 0) {
+                if (BuildConfig.DEBUG) Logger.log(
+                        "saving steps: steps=" + steps + " lastSave=" + lastSaveSteps +
+                                " lastSaveTime=" + new Date(lastSaveTime));
                 int pauseDifference = steps -
                         getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
                                 .getInt("pauseCount", steps);
@@ -86,9 +88,11 @@ public class SensorListener extends Service implements SensorEventListener {
                     getSharedPreferences("G.O.D.", Context.MODE_PRIVATE).edit()
                             .putInt("pauseCount", steps).commit();
                 }
+            } else {
+                Step step = stepRepository.getCurrentStep();
+                step.setSteps(steps);
+                stepRepository.update(step);
             }
-
-            stepRepository.saveCurrentSteps(steps);
             lastSaveSteps = steps;
             lastSaveTime = System.currentTimeMillis();
             showNotification(); // update notification
@@ -165,13 +169,7 @@ public class SensorListener extends Service implements SensorEventListener {
 
         StepRepository stepRepository = new StepRepository((Application) context.getApplicationContext());
 
-        int today_offset = stepRepository.getStepsCount(new Date(DateUtil.getToday()), new Date());
-        if (steps == 0)
-            try {
-                steps = stepRepository.getCurrentStep().getValue().getSteps(); // use saved value if we haven't anything better
-            } catch (NullPointerException exception) {
-                stepRepository.insert(0);
-            }
+        int today_offset = stepRepository.getCurrentStepsCount();
         Notification.Builder notificationBuilder =
                 Build.VERSION.SDK_INT >= 26 ? API26Wrapper.getNotificationBuilder(context) :
                         new Notification.Builder(context);

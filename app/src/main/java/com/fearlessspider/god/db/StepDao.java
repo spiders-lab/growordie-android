@@ -25,7 +25,10 @@ public interface StepDao {
     LiveData<List<Step>> getStepsInRange(Date start, Date end);
 
     @Query("SELECT * FROM steps WHERE createdAt = :today LIMIT 1")
-    LiveData<Step> getCurrentStep(Date today);
+    Step getCurrentStep(Date today);
+
+    @Query("SELECT steps FROM steps WHERE createdAt = :today LIMIT 1")
+    Integer getCurrentStepsCount(Date today);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Step step);

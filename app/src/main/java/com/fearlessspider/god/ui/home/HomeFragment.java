@@ -29,6 +29,7 @@ import com.fearlessspider.god.BuildConfig;
 import com.fearlessspider.god.R;
 import com.fearlessspider.god.components.SensorListener;
 import com.fearlessspider.god.databinding.FragmentHomeBinding;
+import com.fearlessspider.god.models.StepViewModel;
 import com.fearlessspider.god.repository.StepRepository;
 import com.fearlessspider.god.ui.profile.ProfileFragment;
 import com.fearlessspider.god.utils.API26Wrapper;
@@ -56,8 +57,10 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private PieChart pg;
     private ProgressBar progressBar;
     public static int totalstepsgoal=0;
-    private int todayoffset, total_start, goal, since_boot, totaldays = 1, goalreach;
+    private int todayoffset, total_start, goal, since_boot, totaldays = 1, goalreach = 10000;
     private boolean showSteps = true;
+
+    private StepViewModel stepViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         else{
             getActivity().startService(new Intent(getActivity(), SensorListener.class));
         }
+
+        stepViewModel = new ViewModelProvider(this).get(StepViewModel.class);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,6 +95,10 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         pg=binding.graph;
         setPiechart();
         homeViewModel.getText().observe(getViewLifecycleOwner(), stepsleft::setText);
+        total_start = stepViewModel.getTotalStepsCount();
+        stepViewModel.getAllSteps().observe(this, steps -> {
+            totaldays = steps.size() > 0 ? steps.size() : 1;
+        });
         return root;
     }
 
