@@ -33,6 +33,12 @@ public interface StepDao {
     @Query("SELECT steps FROM steps WHERE createdAt = :today LIMIT 1")
     Integer getCurrentStepsCount(Date today);
 
+    @Query("SELECT COUNT(id) FROM steps")
+    Integer getEntriesCount();
+
+    @Query("SELECT SUM(steps) FROM steps WHERE createdAt < :today")
+    Integer getTotalToDate(Date today);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Step step);
 

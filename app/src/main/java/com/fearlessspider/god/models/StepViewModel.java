@@ -40,6 +40,16 @@ public class StepViewModel extends AndroidViewModel {
         return stepRepository.getTotalStepsCount();
     }
 
+    public Integer getTotalWithoutToday() {
+        Integer total = stepRepository.getTotalWithoutToday();
+        if (total == null) return 0;
+        else return total;
+    }
+
+    public Integer getDays() {
+        return stepRepository.getDays();
+    }
+
     public void saveCurrentSteps(int steps) {
         Step step = stepRepository.getCurrentStep();
         if (step == null) {

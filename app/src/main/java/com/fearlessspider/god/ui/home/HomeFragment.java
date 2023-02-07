@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private PieChart pg;
     private ProgressBar progressBar;
     public static int totalstepsgoal=0;
-    private int todayoffset, total_start, goal, since_boot, totaldays = 1, goalreach = 10000;
+    private int todayoffset, total_start = 0, goal, since_boot, totaldays = 1, goalreach = 10000;
     private boolean showSteps = true;
 
     private StepViewModel stepViewModel;
@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         pg=binding.graph;
         setPiechart();
         homeViewModel.getText().observe(getViewLifecycleOwner(), stepsleft::setText);
-        total_start = stepViewModel.getTotalStepsCount();
+
         stepViewModel.getAllSteps().observe(this, steps -> {
             totaldays = steps.size() > 0 ? steps.size() : 1;
         });
@@ -114,14 +114,16 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onResume() {
         super.onResume();
 
-        todayoffset = stepViewModel.getTotalStepsCount();
+        if(BuildConfig.DEBUG) Logger.log(
+                "UI- onresume " + since_boot);
         SharedPreferences prefs = getActivity().getSharedPreferences("G.O.D.", Context.MODE_PRIVATE);
+        todayoffset = -prefs.getInt("pauseCount", since_boot);
 
         goal = prefs.getInt("goal", (int) ProfileFragment.DEFAULT_GOAL);
 
         since_boot = stepViewModel.getTotalStepsCount();
 
-        int pauseDifference = since_boot - prefs.getInt("pauseCount", since_boot);
+        int pauseDifference = todayoffset - since_boot;
 
         SensorManager sm = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
@@ -145,6 +147,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
         since_boot -= pauseDifference;
 
+        total_start = stepViewModel.getTotalWithoutToday();
+        totaldays = stepViewModel.getDays();
+
         stepsDistanceChanges();
     }
 
@@ -159,19 +164,26 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             if(BuildConfig.DEBUG) Logger.log(e);
             e.printStackTrace();
         }
-        stepViewModel.saveCurrentSteps(since_boot);
+        //stepViewModel.saveCurrentSteps(since_boot);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(BuildConfig.DEBUG) Logger.log(
-                "UI- sensorchanged | todatyoffset:" + todayoffset + "sinceboot:" + since_boot + sensorEvent.values[0]);
-        if(sensorEvent.values[0]>Integer.MAX_VALUE || sensorEvent.values[0]==0){
+                "UI- sensorchanged | todatyoffset:" + todayoffset + " msinceboot:" + since_boot + sensorEvent.values[0]);
+        StepRepository stepRepository = new StepRepository(this.requireActivity().getApplication());
+        Step step = stepRepository.getCurrentStep();
+        if(step == null){
+            if(BuildConfig.DEBUG) Logger.log(
+                    "UI- sensorchanged | new day:" + sensorEvent.values[0]);
             todayoffset = -(int) sensorEvent.values[0];
-            StepRepository stepRepository = new StepRepository(this.requireActivity().getApplication());
-            stepRepository.insert((int)sensorEvent.values[0]);
+            getActivity().getSharedPreferences("G.O.D.", Context.MODE_PRIVATE).edit()
+                    .putInt("pauseCount", (int)sensorEvent.values[0]).commit();
+            stepRepository.insert(0);
         }
         since_boot = (int)sensorEvent.values[0];
+        if(BuildConfig.DEBUG) Logger.log(
+                "UI- sensorchanged | todatyoffset:" + todayoffset + " msinceboot:" + since_boot + sensorEvent.values[0]);
         updatePie();
     }
 
@@ -200,7 +212,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     }
 
     private void updatePie() {
-        if(BuildConfig.DEBUG) Logger.log("UI-updatesteps:"+since_boot);
+        if(BuildConfig.DEBUG) Logger.log("UI Pie-updatesteps:"+since_boot);
         int steps_today=Math.max(todayoffset+since_boot,0);
         sliceCurrent.setValue(steps_today);
         if(goal-steps_today>0){
@@ -271,7 +283,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             progressBar.setProgress(b);
         }
         else{
-            SharedPreferences prefs=getActivity().getSharedPreferences("pedometer",Context.MODE_PRIVATE);
+            SharedPreferences prefs=getActivity().getSharedPreferences("G.O.D.",Context.MODE_PRIVATE);
             float stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
             float distance_today=steps_today*stepsize;
             float distance_total=(steps_today+total_start)*stepsize;
@@ -349,6 +361,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         barChart.setShowDecimal(!showSteps);
 
         stepViewModel.getLastEntries().observe(this, stepList -> {
+            barChart.clearChart();
             float distance, stepsize=ProfileFragment.DEFAULT_STEP_SIZE;
             boolean stepsize_cm=true;
             if(!showSteps){
@@ -356,6 +369,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                 stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
                 stepsize_cm=prefs.getString("stepsize_unit",ProfileFragment.DEFAULT_STEP_UNIT).equals("cm");
             }
+            Logger.log("UI Bar" + stepList.size());
             for(Step step : stepList) {
                 BarModel barModel = new BarModel(df.format(step.getCreatedAt()), 0, step.getSteps() > goal ? Color.parseColor("#69F0AE") : Color.parseColor("#40C4FF"));
                 if (showSteps) {

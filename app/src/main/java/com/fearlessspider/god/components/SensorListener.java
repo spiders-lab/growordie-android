@@ -79,8 +79,10 @@ public class SensorListener extends Service implements SensorEventListener {
                 int pauseDifference = steps -
                         getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
                                 .getInt("pauseCount", steps);
-                stepRepository.insert(steps - pauseDifference);
+                if(BuildConfig.DEBUG) Logger.log("Sensor New Day");
+                stepRepository.insert(0);
                 if (pauseDifference > 0) {
+                    if(BuildConfig.DEBUG) Logger.log("Sensor " + steps);
                     // update pauseCount for the new day
                     getSharedPreferences("G.O.D.", Context.MODE_PRIVATE).edit()
                             .putInt("pauseCount", steps).commit();
@@ -88,12 +90,19 @@ public class SensorListener extends Service implements SensorEventListener {
             }
             Step step = stepRepository.getCurrentStep();
             if (step == null) {
-                stepRepository.insert(steps);
+                int pauseDifference = steps -
+                        getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
+                                .getInt("pauseCount", steps);
+                stepRepository.insert(pauseDifference);
+                lastSaveSteps = pauseDifference;
             } else {
-                step.setSteps(steps);
+                int pauseDifference = steps -
+                        getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
+                                .getInt("pauseCount", steps);
+                step.setSteps(pauseDifference);
                 stepRepository.update(step);
+                lastSaveSteps = pauseDifference;
             }
-            lastSaveSteps = steps;
             lastSaveTime = System.currentTimeMillis();
             showNotification(); // update notification
             WidgetUpdateService.enqueueUpdate(this);
@@ -146,7 +155,7 @@ public class SensorListener extends Service implements SensorEventListener {
         // Restart service in 500 ms
         ((AlarmManager) getSystemService(Context.ALARM_SERVICE))
                 .set(AlarmManager.RTC, System.currentTimeMillis() + 500, PendingIntent
-                        .getService(this, 3, new Intent(this, SensorListener.class), 0));
+                        .getService(this, 3, new Intent(this, SensorListener.class), PendingIntent.FLAG_IMMUTABLE));
     }
 
     @Override
@@ -167,14 +176,11 @@ public class SensorListener extends Service implements SensorEventListener {
         SharedPreferences prefs = context.getSharedPreferences("G.O.D.", Context.MODE_PRIVATE);
         int goal = prefs.getInt("goal", 10000);
 
-        StepRepository stepRepository = new StepRepository((Application) context.getApplicationContext());
-
-        Integer today_offset = stepRepository.getCurrentStepsCount();
+        Integer today_offset = -prefs.getInt("pauseCount", 0);
         Notification.Builder notificationBuilder =
                 Build.VERSION.SDK_INT >= 26 ? API26Wrapper.getNotificationBuilder(context) :
                         new Notification.Builder(context);
         if (steps > 0) {
-            if (today_offset == null) today_offset = 0;
             NumberFormat format = NumberFormat.getInstance(Locale.getDefault());
             notificationBuilder.setProgress(goal, today_offset + steps, false).setContentText(
                     today_offset + steps >= goal ?

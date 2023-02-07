@@ -39,6 +39,14 @@ public class StepRepository {
         return stepDao.getCurrentStepsCount(new Date(DateUtil.getToday()));
     }
 
+    public Integer getTotalWithoutToday() {
+        return stepDao.getTotalToDate(new Date(DateUtil.getToday()));
+    }
+
+    public Integer getDays() {
+        return stepDao.getEntriesCount();
+    }
+
     public Integer getTotalStepsCount() {
         Integer steps = stepDao.getTotalStepsCount();
         if (steps == null) {
