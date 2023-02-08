@@ -29,6 +29,8 @@ import com.fearlessspider.god.BuildConfig;
 import com.fearlessspider.god.R;
 import com.fearlessspider.god.components.SensorListener;
 import com.fearlessspider.god.databinding.FragmentHomeBinding;
+import com.fearlessspider.god.db.Step;
+import com.fearlessspider.god.models.StepViewModel;
 import com.fearlessspider.god.repository.StepRepository;
 import com.fearlessspider.god.ui.profile.ProfileFragment;
 import com.fearlessspider.god.utils.API26Wrapper;
@@ -36,6 +38,7 @@ import com.fearlessspider.god.utils.Logger;
 
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.charts.PieChart;
+import org.eazegraph.lib.models.BarModel;
 import org.eazegraph.lib.models.PieModel;
 
 import java.text.NumberFormat;
@@ -56,8 +59,10 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     private PieChart pg;
     private ProgressBar progressBar;
     public static int totalstepsgoal=0;
-    private int todayoffset, total_start, goal, since_boot, totaldays = 1, goalreach;
+    private int todayoffset, total_start = 0, goal, since_boot, totaldays = 1, goalreach = 10000;
     private boolean showSteps = true;
+
+    private StepViewModel stepViewModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,6 +74,8 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         else{
             getActivity().startService(new Intent(getActivity(), SensorListener.class));
         }
+
+        stepViewModel = new ViewModelProvider(this).get(StepViewModel.class);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,6 +97,10 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         pg=binding.graph;
         setPiechart();
         homeViewModel.getText().observe(getViewLifecycleOwner(), stepsleft::setText);
+
+        stepViewModel.getAllSteps().observe(this, steps -> {
+            totaldays = steps.size() > 0 ? steps.size() : 1;
+        });
         return root;
     }
 
@@ -103,11 +114,16 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     public void onResume() {
         super.onResume();
 
+        if(BuildConfig.DEBUG) Logger.log(
+                "UI- onresume " + since_boot);
         SharedPreferences prefs = getActivity().getSharedPreferences("G.O.D.", Context.MODE_PRIVATE);
+        todayoffset = -prefs.getInt("pauseCount", since_boot);
 
         goal = prefs.getInt("goal", (int) ProfileFragment.DEFAULT_GOAL);
 
-        int pauseDifference = since_boot - prefs.getInt("pauseCount", since_boot);
+        since_boot = stepViewModel.getTotalStepsCount();
+
+        int pauseDifference = todayoffset - since_boot;
 
         SensorManager sm = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sm.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
@@ -131,6 +147,9 @@ public class HomeFragment extends Fragment implements SensorEventListener {
 
         since_boot -= pauseDifference;
 
+        total_start = stepViewModel.getTotalWithoutToday();
+        totaldays = stepViewModel.getDays();
+
         stepsDistanceChanges();
     }
 
@@ -145,18 +164,26 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             if(BuildConfig.DEBUG) Logger.log(e);
             e.printStackTrace();
         }
+        //stepViewModel.saveCurrentSteps(since_boot);
     }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(BuildConfig.DEBUG) Logger.log(
-                "UI- sensorchanged | todatyoffset:" + todayoffset + "sinceboot:" + since_boot + sensorEvent.values[0]);
-        if(sensorEvent.values[0]>Integer.MAX_VALUE || sensorEvent.values[0]==0){
+                "UI- sensorchanged | todatyoffset:" + todayoffset + " msinceboot:" + since_boot + sensorEvent.values[0]);
+        StepRepository stepRepository = new StepRepository(this.requireActivity().getApplication());
+        Step step = stepRepository.getCurrentStep();
+        if(step == null){
+            if(BuildConfig.DEBUG) Logger.log(
+                    "UI- sensorchanged | new day:" + sensorEvent.values[0]);
             todayoffset = -(int) sensorEvent.values[0];
-            StepRepository stepRepository = new StepRepository(this.requireActivity().getApplication());
-            stepRepository.insert((int)sensorEvent.values[0]);
+            getActivity().getSharedPreferences("G.O.D.", Context.MODE_PRIVATE).edit()
+                    .putInt("pauseCount", (int)sensorEvent.values[0]).commit();
+            stepRepository.insert(0);
         }
         since_boot = (int)sensorEvent.values[0];
+        if(BuildConfig.DEBUG) Logger.log(
+                "UI- sensorchanged | todatyoffset:" + todayoffset + " msinceboot:" + since_boot + sensorEvent.values[0]);
         updatePie();
     }
 
@@ -185,7 +212,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
     }
 
     private void updatePie() {
-        if(BuildConfig.DEBUG) Logger.log("UI-updatesteps:"+since_boot);
+        if(BuildConfig.DEBUG) Logger.log("UI Pie-updatesteps:"+since_boot);
         int steps_today=Math.max(todayoffset+since_boot,0);
         sliceCurrent.setValue(steps_today);
         if(goal-steps_today>0){
@@ -256,7 +283,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             progressBar.setProgress(b);
         }
         else{
-            SharedPreferences prefs=getActivity().getSharedPreferences("pedometer",Context.MODE_PRIVATE);
+            SharedPreferences prefs=getActivity().getSharedPreferences("G.O.D.",Context.MODE_PRIVATE);
             float stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
             float distance_today=steps_today*stepsize;
             float distance_total=(steps_today+total_start)*stepsize;
@@ -331,14 +358,35 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         SimpleDateFormat df= new SimpleDateFormat("E",Locale.getDefault());
         BarChart barChart =(BarChart) getView().findViewById(R.id.bargraph);
         if(barChart.getData().size()>0) barChart.clearChart();
-        int steps;
-        float distance ,stepsize=ProfileFragment.DEFAULT_STEP_SIZE;
-        boolean stepsize_cm=true;
-        if(!showSteps){
-            SharedPreferences prefs = getActivity().getSharedPreferences("pedometer",Context.MODE_PRIVATE);
-            stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
-            stepsize_cm=prefs.getString("stepsize_unit",ProfileFragment.DEFAULT_STEP_UNIT).equals("cm");}
         barChart.setShowDecimal(!showSteps);
+
+        stepViewModel.getLastEntries().observe(this, stepList -> {
+            barChart.clearChart();
+            float distance, stepsize=ProfileFragment.DEFAULT_STEP_SIZE;
+            boolean stepsize_cm=true;
+            if(!showSteps){
+                SharedPreferences prefs = getActivity().getSharedPreferences("G.O.D.",Context.MODE_PRIVATE);
+                stepsize=prefs.getFloat("stepsize_value",ProfileFragment.DEFAULT_STEP_SIZE);
+                stepsize_cm=prefs.getString("stepsize_unit",ProfileFragment.DEFAULT_STEP_UNIT).equals("cm");
+            }
+            Logger.log("UI Bar" + stepList.size());
+            for(Step step : stepList) {
+                BarModel barModel = new BarModel(df.format(step.getCreatedAt()), 0, step.getSteps() > goal ? Color.parseColor("#69F0AE") : Color.parseColor("#40C4FF"));
+                if (showSteps) {
+                    barModel.setValue(step.getSteps());
+                } else {
+                    distance = step.getSteps() * stepsize;
+                    if (stepsize_cm) {
+                        distance /= 100000;
+                    } else {
+                        distance /= 5280;
+                    }
+                    distance = Math.round(distance * 1000) / 1000f;
+                    barModel.setValue(distance);
+                }
+                barChart.addBar(barModel);
+            }
+        });
     }
 
     private void setPiechart() {

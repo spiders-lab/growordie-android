@@ -20,10 +20,8 @@ public class WidgetUpdateService extends JobIntentService {
     private StepRepository stepRepository;
     @Override
     protected void onHandleWork(@NonNull Intent intent) {
-        int steps = 0;
         stepRepository = new StepRepository((Application) this.getApplicationContext());
-        Logger.log("Widget" + stepRepository.getTotalStepsCount());
-        steps = stepRepository.getTotalStepsCount();
+        int steps = stepRepository.getCurrentStepsCount();
         final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, Widget.class));
         for(int appWidgetId : appWidgetIds) {

@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.fearlessspider.god.utils.DateUtil;
+
 import java.util.Date;
 
 @Entity(tableName = "steps")
@@ -24,7 +26,7 @@ public class Step {
 
     public Step(@NonNull Integer steps) {
         this.steps = steps;
-        this.createdAt = new Date();
+        this.createdAt = new Date(DateUtil.getToday());
     }
 
     public void setId(@NonNull Integer id) {
