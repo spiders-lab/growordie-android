@@ -18,10 +18,10 @@ public interface StepDao {
     @Query("SELECT * FROM steps ORDER BY id DESC LIMIT 7")
     LiveData<List<Step>> getLastEntries();
 
-    @Query("SELECT SUM(steps) AS sum_steps FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
+    @Query("SELECT SUM(endSteps - startSteps) AS sum_steps FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
     Integer getStepsCount(Date start, Date end);
 
-    @Query("SELECT SUM(steps) AS sum_steps FROM steps ORDER BY id ASC")
+    @Query("SELECT SUM(endSteps - startSteps) AS sum_steps FROM steps ORDER BY id ASC")
     Integer getTotalStepsCount();
 
     @Query("SELECT * FROM steps WHERE createdAt >= :start AND createdAt <= :end ORDER BY id ASC")
@@ -30,13 +30,13 @@ public interface StepDao {
     @Query("SELECT * FROM steps WHERE createdAt = :today LIMIT 1")
     Step getCurrentStep(Date today);
 
-    @Query("SELECT steps FROM steps WHERE createdAt = :today LIMIT 1")
+    @Query("SELECT endSteps - startSteps as currentSteps FROM steps WHERE createdAt = :today LIMIT 1")
     Integer getCurrentStepsCount(Date today);
 
     @Query("SELECT COUNT(id) FROM steps")
     Integer getEntriesCount();
 
-    @Query("SELECT SUM(steps) FROM steps WHERE createdAt < :today")
+    @Query("SELECT SUM(endSteps - startSteps) FROM steps WHERE createdAt < :today")
     Integer getTotalToDate(Date today);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -90,18 +90,12 @@ public class SensorListener extends Service implements SensorEventListener {
             }
             Step step = stepRepository.getCurrentStep();
             if (step == null) {
-                int pauseDifference = steps -
-                        getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
-                                .getInt("pauseCount", steps);
-                stepRepository.insert(pauseDifference);
-                lastSaveSteps = pauseDifference;
+                stepRepository.insert(steps);
+                lastSaveSteps = steps;
             } else {
-                int pauseDifference = steps -
-                        getSharedPreferences("G.O.D.", Context.MODE_PRIVATE)
-                                .getInt("pauseCount", steps);
-                step.setSteps(pauseDifference);
+                step.setEndSteps(steps);
                 stepRepository.update(step);
-                lastSaveSteps = pauseDifference;
+                lastSaveSteps = steps;
             }
             lastSaveTime = System.currentTimeMillis();
             showNotification(); // update notification
