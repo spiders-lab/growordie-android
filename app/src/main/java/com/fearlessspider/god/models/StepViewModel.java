@@ -55,7 +55,7 @@ public class StepViewModel extends AndroidViewModel {
         if (step == null) {
             stepRepository.insert(steps);
         } else {
-            step.setSteps(steps);
+            step.setEndSteps(steps);
             stepRepository.update(step);
         }
     }

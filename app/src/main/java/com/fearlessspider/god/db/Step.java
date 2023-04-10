@@ -17,34 +17,47 @@ public class Step {
     private Integer id;
 
     @NonNull
-    @ColumnInfo(name = "steps")
-    private Integer steps;
+    @ColumnInfo(name = "startSteps")
+    private Integer startSteps;
+
+    @NonNull
+    @ColumnInfo(name = "endSteps")
+    private Integer endSteps;
 
     @NonNull
     @ColumnInfo(name = "createdAt")
     private Date createdAt;
 
-    public Step(@NonNull Integer steps) {
-        this.steps = steps;
+    public Step(@NonNull Integer startSteps, @NonNull Integer endSteps) {
+        this.startSteps = startSteps;
+        this.endSteps = endSteps;
         this.createdAt = new Date(DateUtil.getToday());
     }
 
-    public void setId(@NonNull Integer id) {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setSteps(@NonNull Integer steps) {
-        this.steps = steps;
+    @NonNull
+    public Integer getStartSteps() {
+        return startSteps;
+    }
+
+    public void setStartSteps(@NonNull Integer startSteps) {
+        this.startSteps = startSteps;
     }
 
     @NonNull
-    public Integer getId() {
-        return this.id;
+    public Integer getEndSteps() {
+        return endSteps;
     }
 
-    @NonNull
-    public Integer getSteps() {
-        return this.steps;
+    public void setEndSteps(@NonNull Integer endSteps) {
+        this.endSteps = endSteps;
     }
 
     @NonNull
@@ -54,6 +67,10 @@ public class Step {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getSteps() {
+        return this.endSteps - this.startSteps;
     }
 
 }

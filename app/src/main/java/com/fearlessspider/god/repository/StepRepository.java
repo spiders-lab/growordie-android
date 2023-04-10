@@ -69,7 +69,7 @@ public class StepRepository {
 
     public void insert(int steps) {
         GODDatabase.databaseWriteExecutor.execute(() -> {
-            stepDao.insert(new Step(steps));
+            stepDao.insert(new Step(steps, steps));
         });
     }
 

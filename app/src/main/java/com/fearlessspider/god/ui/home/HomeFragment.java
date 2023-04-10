@@ -12,7 +12,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +97,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
         setPiechart();
         homeViewModel.getText().observe(getViewLifecycleOwner(), stepsleft::setText);
 
-        stepViewModel.getAllSteps().observe(this, steps -> {
+        stepViewModel.getAllSteps().observe(getViewLifecycleOwner(), steps -> {
             totaldays = steps.size() > 0 ? steps.size() : 1;
         });
         return root;
@@ -133,7 +132,7 @@ public class HomeFragment extends Fragment implements SensorEventListener {
                     .setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(final DialogInterface dialogInterface) {
-                            getActivity().finish();
+                            dialogInterface.dismiss();
                         }
                     }).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
@@ -230,7 +229,11 @@ public class HomeFragment extends Fragment implements SensorEventListener {
             double kcal=steps_today*0.04;
             calories.setText(formatter.format(kcal));
             totalView.setText(formatter.format(total_start+steps_today));
-            averageView.setText(formatter.format((total_start+steps_today)/totaldays));
+            try {
+                averageView.setText(formatter.format((total_start + steps_today) / totaldays));
+            } catch (ArithmeticException ex) {
+                averageView.setText(formatter.format(0));
+            }
             totalstepsgoal=total_start+steps_today;
             if(totalstepsgoal<3000){
                 levels.setBackgroundColor(Color.GRAY);
