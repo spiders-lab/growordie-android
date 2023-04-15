@@ -33,7 +33,7 @@ public class ExerciseListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentExerciseListBinding.inflate(inflater, container, false);
 
-        RecyclerView recycleView = getView().findViewById(R.id.recycleView);
+        RecyclerView recycleView = binding.recycleView;
         exerciseAdapter = new ExerciseAdapter(new ExerciseAdapter.ExerciseDiff());
         recycleView.setAdapter(exerciseAdapter);
         recycleView.setLayoutManager(new LinearLayoutManager(getContext()));

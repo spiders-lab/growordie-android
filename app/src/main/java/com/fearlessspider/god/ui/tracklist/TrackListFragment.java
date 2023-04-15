@@ -31,7 +31,7 @@ public class TrackListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentTrackListBinding.inflate(inflater, container, false);
 
-        RecyclerView recycleView = getView().findViewById(R.id.recycleView);
+        RecyclerView recycleView = binding.recycleView;
         trackAdapter = new TrackAdapter(new TrackAdapter.TrackDiff());
         recycleView.setAdapter(trackAdapter);
         recycleView.setLayoutManager(new LinearLayoutManager(getContext()));
