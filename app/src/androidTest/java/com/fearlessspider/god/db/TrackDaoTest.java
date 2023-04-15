@@ -44,7 +44,7 @@ public class TrackDaoTest {
 
     @Test
     public void insertAndGetTrack() throws Exception {
-        Track track = new Track(0, "Java");
+        Track track = new Track("Java");
         trackDao.insert(track);
         List<Track> allTracks = LiveDataTestUtil.getValue(trackDao.getAlphabetizedTracks());
         Assert.assertEquals(allTracks.get(0).getName(), track.getName());
@@ -52,9 +52,9 @@ public class TrackDaoTest {
 
     @Test
     public void getAllTracks() throws Exception {
-        Track track = new Track(0, "C++");
+        Track track = new Track("C++");
         trackDao.insert(track);
-        Track track1 = new Track(1, "Python");
+        Track track1 = new Track("Python");
         trackDao.insert(track1);
         List<Track> allTracks = LiveDataTestUtil.getValue(trackDao.getAlphabetizedTracks());
         Assert.assertEquals(allTracks.get(0).getName(), track.getName());
@@ -63,9 +63,9 @@ public class TrackDaoTest {
 
     @Test
     public void deleteAll() throws Exception {
-        Track track = new Track(0, "JavaScript");
+        Track track = new Track("JavaScript");
         trackDao.insert(track);
-        Track track1 = new Track(1, "HTML");
+        Track track1 = new Track("HTML");
         trackDao.insert(track1);
         trackDao.deleteAll();
         List<Track> allTracks = LiveDataTestUtil.getValue(trackDao.getAlphabetizedTracks());

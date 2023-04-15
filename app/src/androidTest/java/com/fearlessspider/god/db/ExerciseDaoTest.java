@@ -44,7 +44,7 @@ public class ExerciseDaoTest {
 
     @Test
     public void insertAndGetExercise() throws Exception {
-        Exercise exercise = new Exercise(0, "40 lines of code");
+        Exercise exercise = new Exercise("40 lines of code");
         exerciseDao.insert(exercise);
         List<Exercise> allExercise = LiveDataTestUtil.getValue(exerciseDao.getOrderedByCreatedAt());
         Assert.assertEquals(allExercise.get(0).getCreatedAt(), exercise.getCreatedAt());
@@ -52,9 +52,9 @@ public class ExerciseDaoTest {
 
     @Test
     public void getAllExercises() throws Exception {
-        Exercise exercise = new Exercise(0, "10 lines of code");
+        Exercise exercise = new Exercise("10 lines of code");
         exerciseDao.insert(exercise);
-        Exercise exercise1 = new Exercise(1, "20 lines of code");
+        Exercise exercise1 = new Exercise("20 lines of code");
         exerciseDao.insert(exercise1);
         List<Exercise> allExercise = LiveDataTestUtil.getValue(exerciseDao.getOrderedByCreatedAt());
         Assert.assertEquals(allExercise.get(0).getCreatedAt(), exercise.getCreatedAt());
@@ -63,9 +63,9 @@ public class ExerciseDaoTest {
 
     @Test
     public void deleteAll() throws Exception {
-        Exercise exercise = new Exercise(0, "30 lines of code");
+        Exercise exercise = new Exercise("30 lines of code");
         exerciseDao.insert(exercise);
-        Exercise exercise1 = new Exercise(1, "50 lines of code");
+        Exercise exercise1 = new Exercise("50 lines of code");
         exerciseDao.insert(exercise1);
         exerciseDao.deleteAll();
         List<Exercise> allExercise = LiveDataTestUtil.getValue(exerciseDao.getOrderedByCreatedAt());
