@@ -31,7 +31,7 @@ public class JourneyListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentJourneyListBinding.inflate(inflater, container, false);
 
-        RecyclerView recycleView = getView().findViewById(R.id.recycleView);
+        RecyclerView recycleView = binding.recycleView;
         journeyAdapter = new JourneyAdapter(new JourneyAdapter.JourneyDiff());
         recycleView.setAdapter(journeyAdapter);
         recycleView.setLayoutManager(new LinearLayoutManager(getContext()));

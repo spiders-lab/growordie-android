@@ -13,8 +13,12 @@
             android:icon="@drawable/ic_menu_achievements"
             android:title="@string/menu_achievements" />
         <item
-            android:id="@+id/nav_journeys"
+            android:id="@+id/nav_journey"
             android:icon="@drawable/ic_menu_journey"
             android:title="@string/menu_journey" />
+        <item
+            android:id="@+id/nav_register"
+            android:icon="@drawable/ic_menu_register"
+            android:title="@string/menu_register" />
     </group>
 </menu>
