@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,8 +37,37 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textProfile;
-        profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final EditText inputUsername = binding.inputUsername;
+        final TextView textViewStepsGoal = binding.textViewStepsGoal;
+        final SeekBar seekBarStepsGoal = binding.seekBarStepsGoal;
+        final Button buttonSave = binding.buttonSave;
+
+        profileViewModel.getText().observe(getViewLifecycleOwner(), inputUsername::setText);
+        seekBarStepsGoal.incrementProgressBy(1000);
+        seekBarStepsGoal.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progress = progress / 1000;
+                progress = progress * 1000;
+                textViewStepsGoal.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Saved.", Toast.LENGTH_SHORT).show();
+            }
+        });
         return root;
     }
 
