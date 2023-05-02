@@ -26,6 +26,9 @@ public class User {
     @ColumnInfo(name = "username")
     private String username;
 
+    @ColumnInfo(name = "steps_goal", defaultValue = "10000")
+    private Integer stepsGoal;
+
     public User(@NonNull String username) {
         this.username = username;
     }
@@ -42,5 +45,15 @@ public class User {
     @NonNull
     public String getUsername() {
         return this.username;
+    }
+
+    @NonNull
+    public Integer getStepsGoal() {
+        return stepsGoal;
+    }
+
+    @NonNull
+    public void setStepsGoal(Integer stepsGoal) {
+        this.stepsGoal = stepsGoal;
     }
 }
