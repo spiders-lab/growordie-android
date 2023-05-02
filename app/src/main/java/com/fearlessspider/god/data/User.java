@@ -11,12 +11,15 @@ public class User implements Serializable {
     @ServerTimestamp
     public Date createdAt;
 
+    public Integer stepsGoal;
+
     public User() {
     }
 
     public User(String id, String username) {
         this.id = id;
         this.username = username;
+        this.stepsGoal = 10000;
     }
 
     @Exclude
@@ -27,5 +30,15 @@ public class User implements Serializable {
     @Exclude
     public String getUsername() {
         return username;
+    }
+
+    @Exclude
+    public Integer getStepsGoal() {
+        return stepsGoal;
+    }
+
+    @Exclude
+    public void setStepsGoal(Integer stepsGoal) {
+        this.stepsGoal = stepsGoal;
     }
 }
