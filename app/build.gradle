@@ -50,29 +50,29 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.7.0'
     implementation 'androidx.navigation:navigation-fragment:2.7.6'
     implementation 'androidx.navigation:navigation-ui:2.7.6'
-    implementation 'com.google.firebase:firebase-firestore:24.10.0'
+    implementation 'com.google.firebase:firebase-firestore:24.10.1'
     implementation 'com.google.firebase:firebase-analytics:21.5.0'
-    implementation 'com.google.firebase:firebase-auth:22.3.0'
-    implementation 'com.google.firebase:firebase-crashlytics:18.6.0'
+    implementation 'com.google.firebase:firebase-auth:22.3.1'
+    implementation 'com.google.firebase:firebase-crashlytics:18.6.1'
     //implementation 'com.google.firebase:firebase-perf:20.3.1'
     implementation 'com.google.firebase:firebase-messaging:23.4.0'
     //implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.1'
     implementation 'androidx.test:core:1.5.0'
     implementation 'androidx.fragment:fragment:1.6.2'
-    implementation 'com.github.blackfizz:eazegraph:1.2.2@aar'
+    implementation 'com.github.blackfizz:eazegraph:1.2.3@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
-    implementation 'io.reactivex.rxjava3:rxjava:3.1.6'
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.8'
     debugImplementation 'androidx.fragment:fragment-testing:1.6.2'
 
     annotationProcessor 'androidx.room:room-compiler:2.6.1'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:5.3.1'
+    testImplementation 'org.mockito:mockito-core:5.9.0'
 
     androidTestImplementation 'androidx.test:core:1.5.0'
 
@@ -94,7 +94,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.5.1'
 
-    androidTestImplementation 'org.mockito:mockito-android:5.3.1'
+    androidTestImplementation 'org.mockito:mockito-android:5.9.0'
 
     constraints {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
